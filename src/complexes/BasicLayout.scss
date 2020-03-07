@@ -12,6 +12,11 @@
       text-decoration: underline;
     }
   }
+
+  @media screen and (max-width: 400px) {
+    height: 3em;
+    line-height: 3em;
+  }
 }
 
 .BasicPageBody {
