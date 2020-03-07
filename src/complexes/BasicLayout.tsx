@@ -3,7 +3,7 @@ import './BasicLayout.css';
 
 type BasicLayoutProps = React.ComponentPropsWithRef<'div'>;
 
-const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
+export const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
   const { children, ...restProps } = props;
 
   return (
@@ -15,7 +15,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
   );
 };
 
-const BasicPageHeader = () => {
+export const BasicPageHeader = () => {
   return (
     <div className="BasicPageHeader">
       <div className="ui-container">
@@ -25,7 +25,7 @@ const BasicPageHeader = () => {
   );
 };
 
-const BasicPageBody: React.FC = (props) => {
+export const BasicPageBody: React.FC = (props) => {
   return (
     <div className="BasicPageBody ui-container">
       {props.children}
@@ -33,7 +33,7 @@ const BasicPageBody: React.FC = (props) => {
   );
 };
 
-const BasicPageFooter = () => {
+export const BasicPageFooter = () => {
   return (
     <div className="BasicPageFooter">
       <div className="ui-container">
@@ -42,5 +42,3 @@ const BasicPageFooter = () => {
     </div>
   );
 };
-
-export default BasicLayout;

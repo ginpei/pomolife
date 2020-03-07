@@ -1,5 +1,5 @@
 import React from 'react';
-import BasicLayout from '../complexes/BasicLayout';
+import { BasicLayout } from '../complexes/BasicLayout';
 
 const TimerPage: React.FC = () => {
   return (
