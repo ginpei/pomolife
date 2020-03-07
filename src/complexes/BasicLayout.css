@@ -1,0 +1,25 @@
+.BasicPageHeader {
+  background-color: #036;
+  color: white;
+  height: 1.5em;
+  line-height: 1.5em;
+}
+
+.BasicPageHeader a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.BasicPageHeader a:hover {
+  text-decoration: underline;
+}
+
+.BasicPageBody {
+  min-height: 60vh;
+}
+
+.BasicPageFooter {
+  border-top: dashed 1px lightgray;
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
