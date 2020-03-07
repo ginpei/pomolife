@@ -1,5 +1,5 @@
 import React from 'react';
-import './BasicLayout.css';
+import './BasicLayout.scss';
 
 type BasicLayoutProps = React.ComponentPropsWithRef<'div'>;
 
