@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BasicLayout } from '../complexes/BasicLayout';
 import * as Activity from '../models/Activity';
-import * as TimerContext from '../models/Tomato';
+import * as TimerContext from '../models/TimerContext';
 import './TimerPage.scss';
 
 export const TimerPage: React.FC = () => {

@@ -1,4 +1,4 @@
-import * as TimerContext from './Tomato';
+import * as TimerContext from './TimerContext';
 
 describe('TimerContext', () => {
   const min25 = 25 * 60 * 1000;
