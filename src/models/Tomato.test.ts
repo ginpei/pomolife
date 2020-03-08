@@ -37,6 +37,11 @@ describe('Tomato', () => {
       const remaining = Tomato.getRemaining(tomato, now + 3000 + 1000);
       expect(remaining).toBe(min25 - (1234 + 1000));
     });
+
+    it('does not returns negative number', () => {
+      const remaining = Tomato.getRemaining(tomato, now + min25);
+      expect(remaining).toBe(0);
+    });
   });
 
   describe('getProgress()', () => {

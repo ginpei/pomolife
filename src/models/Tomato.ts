@@ -33,9 +33,10 @@ export function start(now = Date.now()): Tomato {
  * Returns remaining time in milliseconds.
  */
 export function getRemaining(tomato: Tomato, now = Date.now()) {
-  return tomato.running
+  const remaining = tomato.running
     ? tomato.remaining - (now - tomato.startedAt)
     : tomato.remaining;
+  return remaining < 0 ? 0 : remaining;
 }
 
 /**
