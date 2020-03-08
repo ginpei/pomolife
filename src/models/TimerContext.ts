@@ -4,7 +4,7 @@
  */
 export type TimerContext = {
   duration: number,
-  remaining: number,
+  consumption: number,
   running: boolean,
   sessionStartedAt: number,
 }
@@ -14,7 +14,7 @@ export function getNewTimerContext(): TimerContext {
 
   return {
     duration,
-    remaining: duration,
+    consumption: 0,
     running: false,
     sessionStartedAt: 0,
   };
@@ -25,7 +25,7 @@ export function getNewTimerContext(): TimerContext {
  */
 export function start(now = Date.now()): TimerContext {
   const context = getNewTimerContext();
-  context.remaining = context.duration;
+  context.consumption = 0;
   context.running = true;
   context.sessionStartedAt = now;
   return context;
@@ -35,9 +35,8 @@ export function start(now = Date.now()): TimerContext {
  * Returns remaining time in milliseconds.
  */
 export function getRemaining(context: TimerContext, now = Date.now()) {
-  const remaining = context.running
-    ? context.remaining - (now - context.sessionStartedAt)
-    : context.remaining;
+  const elapse = context.running ? now - context.sessionStartedAt : 0;
+  const remaining = context.duration - context.consumption - elapse;
   return remaining < 0 ? 0 : remaining;
 }
 
@@ -57,7 +56,7 @@ export function pause(context: TimerContext, now = Date.now()) {
     return;
   }
 
-  context.remaining -= now - context.sessionStartedAt;
+  context.consumption += now - context.sessionStartedAt;
   context.running = false;
   context.sessionStartedAt = 0;
 }

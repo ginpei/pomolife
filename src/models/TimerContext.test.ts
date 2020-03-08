@@ -60,12 +60,12 @@ describe('TimerContext', () => {
     });
 
     it('merges elapse into remaining', () => {
-      expect(context.remaining).toBe(min25 - 1234);
+      expect(TimerContext.getRemaining(context)).toBe(min25 - 1234);
     });
 
     it('does not break if already paused', () => {
       TimerContext.pause(context, now);
-      expect(context.remaining).toBe(min25 - 1234);
+      expect(TimerContext.getRemaining(context)).toBe(min25 - 1234);
     });
   });
 
