@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BasicLayout } from '../complexes/BasicLayout';
 import * as Activity from '../models/Activity';
 import * as Tomato from '../models/Tomato';
+import './TimerPage.scss';
 
 export const TimerPage: React.FC = () => {
   const [tomato, setTomato] = useState(Tomato.getNewTomato());
@@ -167,7 +168,10 @@ const ActivityFeelingInputList: React.FC<{
   return (
     <>
       {feelings.map((feeling) => (
-        <label key={feeling.feeling}>
+        <label
+          className="ActivityFeelingInputList-item"
+          key={feeling.feeling}
+        >
           <input
             checked={feeling.feeling === props.feeling}
             name="feeling"
