@@ -9,10 +9,12 @@ export type Tomato = {
   startedAt: number,
 }
 
-function getNewTomato(): Tomato {
+export function getNewTomato(): Tomato {
+  const period = 25 * 60 * 1000;
+
   return {
-    period: 25 * 60 * 1000,
-    remaining: 0,
+    period,
+    remaining: period,
     running: false,
     startedAt: 0,
   };

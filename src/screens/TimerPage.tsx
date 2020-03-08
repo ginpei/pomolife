@@ -1,43 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import { BasicLayout } from '../complexes/BasicLayout';
+import * as Tomato from '../models/Tomato';
 
 const TimerPage: React.FC = () => {
-  const [originalPeriod, setOriginalPeriod] = useState(25 * 60 * 1000);
-  const [period, setPeriod] = useState(0);
-  const [remaining, setRemaining] = useState(0);
-  const [running, setRunning] = useState(false);
-  const [startedAt, setStartedAt] = useState(0);
+  const [tomato, setTomato] = useState(Tomato.getNewTomato());
   const [tm, setTm] = useState(0);
+  const [remaining, setRemaining] = useState(Tomato.getRemaining(tomato));
 
   // render current time
   useEffect(() => {
     window.clearInterval(tm);
 
-    if (running) {
-      setTm(window.setInterval(
-        () => {
-          const newRemaining = Math.max(0, period - (Date.now() - startedAt));
-          setRemaining(newRemaining);
-          if (newRemaining <= 0) {
-            onStopClick();
-          }
-        },
-        100,
-      ));
-    } else {
-      setRemaining(0);
+    if (!tomato.running) {
+      return;
     }
+
+    setTm(window.setInterval(
+      () => {
+        const newRemaining = Tomato.getRemaining(tomato);
+        setRemaining(newRemaining);
+        if (newRemaining <= 0) {
+          onPauseClick();
+        }
+      },
+      100,
+    ));
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [period, running, startedAt])
+  }, [tomato.running])
 
   const onStartClick = () => {
-    setPeriod(originalPeriod);
-    setStartedAt(Date.now());
-    setRunning(true);
+    setTomato(Tomato.start());
   };
 
-  const onStopClick = () => {
-    setRunning(false);
+  const onPauseClick = () => {
+    Tomato.pause(tomato);
+    setTomato(tomato);
+  };
+
+  const onRestartClick = () => {
+    Tomato.restart(tomato);
   };
 
   return (
@@ -48,11 +49,12 @@ const TimerPage: React.FC = () => {
         {' '}
         {ht(remaining)}
         {' '}
-        ({(Math.ceil(remaining / originalPeriod * 10000) / 100).toFixed(2)} %)
+        ({(Tomato.getProgress(tomato) * 100).toFixed(2)} %)
       </div>
       <div>
         <button onClick={onStartClick}>Start</button>
-        <button onClick={onStopClick}>Stop</button>
+        <button onClick={onPauseClick}>Pause</button>
+        <button onClick={onRestartClick}>Restart</button>
       </div>
     </BasicLayout>
   );
