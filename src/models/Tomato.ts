@@ -33,7 +33,9 @@ export function start(now = Date.now()): Tomato {
  * Returns remaining time in milliseconds.
  */
 export function getRemaining(tomato: Tomato, now = Date.now()) {
-  return tomato.remaining - (now - tomato.startedAt);
+  return tomato.running
+    ? tomato.remaining - (now - tomato.startedAt)
+    : tomato.remaining;
 }
 
 /**
@@ -48,6 +50,10 @@ export function getProgress(tomato: Tomato, now = Date.now()) {
  * @see Tomato.restart()
  */
 export function pause(tomato: Tomato, now = Date.now()) {
+  if (!tomato.running) {
+    return;
+  }
+
   tomato.remaining -= now - tomato.startedAt;
   tomato.running = false;
   tomato.startedAt = 0;

@@ -25,6 +25,12 @@ describe('Tomato', () => {
       expect(Tomato.getRemaining(tomato, now)).toBe(min25 - 1234);
     });
 
+    it('returns paused remaining', () => {
+      Tomato.pause(tomato, now);
+      const remaining = Tomato.getRemaining(tomato, now);
+      expect(remaining).toBe(min25 - 1234);
+    });
+
     it('returns restarted remaining', () => {
       Tomato.pause(tomato, now);
       Tomato.restart(tomato, now + 3000);
@@ -49,8 +55,12 @@ describe('Tomato', () => {
     });
 
     it('merges elapse into remaining', () => {
-      const expected = min25 - 1234;
-      expect(tomato.remaining).toBe(expected);
+      expect(tomato.remaining).toBe(min25 - 1234);
+    });
+
+    it('does not break if already paused', () => {
+      Tomato.pause(tomato, now);
+      expect(tomato.remaining).toBe(min25 - 1234);
     });
   });
 
