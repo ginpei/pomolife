@@ -19,7 +19,7 @@ export const BasicPageHeader = () => {
   return (
     <div className="BasicPageHeader">
       <div className="ui-container">
-        <a href="/">Header</a>
+        <a href="/">Pomolife</a>
       </div>
     </div>
   );
