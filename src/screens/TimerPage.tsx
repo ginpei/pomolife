@@ -3,7 +3,7 @@ import { BasicLayout } from '../complexes/BasicLayout';
 import * as Activity from '../models/Activity';
 import * as Tomato from '../models/Tomato';
 
-const TimerPage: React.FC = () => {
+export const TimerPage: React.FC = () => {
   const [tomato, setTomato] = useState(Tomato.getNewTomato());
   const [remaining, setRemaining] = useState(Tomato.getRemaining(tomato));
   const [tm, setTm] = useState(0);
@@ -195,5 +195,3 @@ function ht(ms: number): string {
   const m = Math.ceil(s / 60);
   return `${m} min`;
 }
-
-export default TimerPage;

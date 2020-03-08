@@ -1,5 +1,5 @@
 import React from 'react';
-import TimerPage from './screens/TimerPage';
+import { TimerPage } from './screens/TimerPage';
 
 function App() {
   return (
