@@ -63,6 +63,10 @@ export function pause(tomato: Tomato, now = Date.now()) {
  * Restarts paused session.
  */
 export function restart(tomato: Tomato, now = Date.now()) {
+  if (tomato.running) {
+    return;
+  }
+
   tomato.running = true;
   tomato.startedAt = now;
 }

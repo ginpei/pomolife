@@ -73,5 +73,10 @@ describe('Tomato', () => {
     it('starts running', () => {
       expect(tomato.running).toBe(true);
     });
+
+    it('does not break if not paused', () => {
+      Tomato.restart(tomato, now + 4000);
+      expect(tomato.startedAt).toBe(now + 3000);
+    });
   });
 });
