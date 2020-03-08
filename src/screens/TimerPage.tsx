@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { BasicLayout } from '../complexes/BasicLayout';
 import * as Activity from '../models/Activity';
-import * as Tomato from '../models/Tomato';
+import * as TimerContext from '../models/Tomato';
 import './TimerPage.scss';
 
 export const TimerPage: React.FC = () => {
-  const [tomato, setTomato] = useState(Tomato.getNewTomato());
-  const [remaining, setRemaining] = useState(Tomato.getRemaining(tomato));
+  const [context, setContext] = useState(TimerContext.getNewTimerContext());
+  const [remaining, setRemaining] = useState(TimerContext.getRemaining(context));
   const [tm, setTm] = useState(0);
   const [currentActivity, setCurrentActivity] = useState(Activity.getNewActivity());
   const [activityLog] = useState<Activity.Activity[]>([]);
@@ -15,13 +15,13 @@ export const TimerPage: React.FC = () => {
   useEffect(() => {
     window.clearInterval(tm);
 
-    if (!tomato.running) {
+    if (!context.running) {
       return;
     }
 
     setTm(window.setInterval(
       () => {
-        const newRemaining = Tomato.getRemaining(tomato);
+        const newRemaining = TimerContext.getRemaining(context);
         setRemaining(newRemaining);
         if (newRemaining <= 0) {
           onPauseClick();
@@ -30,10 +30,10 @@ export const TimerPage: React.FC = () => {
       100,
     ));
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tomato.running])
+  }, [context.running])
 
   const onStartClick = () => {
-    setTomato(Tomato.start());
+    setContext(TimerContext.start());
 
     Activity.setDone(currentActivity);
     activityLog.push(currentActivity);
@@ -41,12 +41,12 @@ export const TimerPage: React.FC = () => {
   };
 
   const onPauseClick = () => {
-    Tomato.pause(tomato);
-    setTomato(tomato);
+    TimerContext.pause(context);
+    setContext(context);
   };
 
   const onRestartClick = () => {
-    Tomato.restart(tomato);
+    TimerContext.restart(context);
   };
 
   const onActivityChange = (activity: Activity.Activity) => {
@@ -61,7 +61,7 @@ export const TimerPage: React.FC = () => {
         {' '}
         {ht(remaining)}
         {' '}
-        ({(Tomato.getProgress(tomato) * 100).toFixed(2)} %)
+        ({(TimerContext.getProgress(context) * 100).toFixed(2)} %)
       </div>
       <div>
         <button onClick={onStartClick}>Start</button>

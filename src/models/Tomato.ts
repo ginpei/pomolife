@@ -1,75 +1,75 @@
 /**
  * Pomodoro session context.
- * Use `Tomato.start()` to obtain this.
+ * Use `TimerContext.start()` to obtain this.
  */
-export type Tomato = {
-  period: number,
+export type TimerContext = {
+  duration: number,
   remaining: number,
   running: boolean,
-  startedAt: number,
+  sessionStartedAt: number,
 }
 
-export function getNewTomato(): Tomato {
-  const period = 25 * 60 * 1000;
+export function getNewTimerContext(): TimerContext {
+  const duration = 25 * 60 * 1000;
 
   return {
-    period,
-    remaining: period,
+    duration,
+    remaining: duration,
     running: false,
-    startedAt: 0,
+    sessionStartedAt: 0,
   };
 }
 
 /**
  * Starts a new pomodoro session.
  */
-export function start(now = Date.now()): Tomato {
-  const tomato = getNewTomato();
-  tomato.remaining = tomato.period;
-  tomato.running = true;
-  tomato.startedAt = now;
-  return tomato;
+export function start(now = Date.now()): TimerContext {
+  const context = getNewTimerContext();
+  context.remaining = context.duration;
+  context.running = true;
+  context.sessionStartedAt = now;
+  return context;
 }
 
 /**
  * Returns remaining time in milliseconds.
  */
-export function getRemaining(tomato: Tomato, now = Date.now()) {
-  const remaining = tomato.running
-    ? tomato.remaining - (now - tomato.startedAt)
-    : tomato.remaining;
+export function getRemaining(context: TimerContext, now = Date.now()) {
+  const remaining = context.running
+    ? context.remaining - (now - context.sessionStartedAt)
+    : context.remaining;
   return remaining < 0 ? 0 : remaining;
 }
 
 /**
  * Returns remaining time in progress as range of 0-1.
  */
-export function getProgress(tomato: Tomato, now = Date.now()) {
-  return getRemaining(tomato, now) / tomato.period;
+export function getProgress(context: TimerContext, now = Date.now()) {
+  return getRemaining(context, now) / context.duration;
 }
 
 /**
  * Pauses pomodoro session.
- * @see Tomato.restart()
+ * @see TimerContext.restart()
  */
-export function pause(tomato: Tomato, now = Date.now()) {
-  if (!tomato.running) {
+export function pause(context: TimerContext, now = Date.now()) {
+  if (!context.running) {
     return;
   }
 
-  tomato.remaining -= now - tomato.startedAt;
-  tomato.running = false;
-  tomato.startedAt = 0;
+  context.remaining -= now - context.sessionStartedAt;
+  context.running = false;
+  context.sessionStartedAt = 0;
 }
 
 /**
  * Restarts paused session.
  */
-export function restart(tomato: Tomato, now = Date.now()) {
-  if (tomato.running) {
+export function restart(context: TimerContext, now = Date.now()) {
+  if (context.running) {
     return;
   }
 
-  tomato.running = true;
-  tomato.startedAt = now;
+  context.running = true;
+  context.sessionStartedAt = now;
 }

@@ -1,87 +1,87 @@
-import * as Tomato from './Tomato';
+import * as TimerContext from './Tomato';
 
-describe('Tomato', () => {
+describe('TimerContext', () => {
   const min25 = 25 * 60 * 1000;
 
-  let tomato: Tomato.Tomato;
+  let context: TimerContext.TimerContext;
   let startedAt: number;
   let now: number;
 
   beforeEach(() => {
     startedAt = Date.now();
-    tomato = Tomato.start(startedAt);
+    context = TimerContext.start(startedAt);
 
     now = new Date(startedAt + 1234).getTime();
   });
 
   describe('start()', () => {
-    it('sets tomato running', () => {
-      expect(tomato.running).toBe(true);
+    it('sets running', () => {
+      expect(context.running).toBe(true);
     });
   });
 
   describe('getRemaining()', () => {
     it('returns clean remaining', () => {
-      expect(Tomato.getRemaining(tomato, now)).toBe(min25 - 1234);
+      expect(TimerContext.getRemaining(context, now)).toBe(min25 - 1234);
     });
 
     it('returns paused remaining', () => {
-      Tomato.pause(tomato, now);
-      const remaining = Tomato.getRemaining(tomato, now);
+      TimerContext.pause(context, now);
+      const remaining = TimerContext.getRemaining(context, now);
       expect(remaining).toBe(min25 - 1234);
     });
 
     it('returns restarted remaining', () => {
-      Tomato.pause(tomato, now);
-      Tomato.restart(tomato, now + 3000);
-      const remaining = Tomato.getRemaining(tomato, now + 3000 + 1000);
+      TimerContext.pause(context, now);
+      TimerContext.restart(context, now + 3000);
+      const remaining = TimerContext.getRemaining(context, now + 3000 + 1000);
       expect(remaining).toBe(min25 - (1234 + 1000));
     });
 
     it('does not returns negative number', () => {
-      const remaining = Tomato.getRemaining(tomato, now + min25);
+      const remaining = TimerContext.getRemaining(context, now + min25);
       expect(remaining).toBe(0);
     });
   });
 
   describe('getProgress()', () => {
     it('returns progress in range 0-1', () => {
-      expect(Tomato.getProgress(tomato, now + (min25 / 2))).toBeCloseTo(0.5);
+      expect(TimerContext.getProgress(context, now + (min25 / 2))).toBeCloseTo(0.5);
     });
   });
 
   describe('pause()', () => {
     beforeEach(() => {
-      Tomato.pause(tomato, now);
+      TimerContext.pause(context, now);
     });
 
     it('stops running', () => {
-      expect(tomato.running).toBe(false);
+      expect(context.running).toBe(false);
     });
 
     it('merges elapse into remaining', () => {
-      expect(tomato.remaining).toBe(min25 - 1234);
+      expect(context.remaining).toBe(min25 - 1234);
     });
 
     it('does not break if already paused', () => {
-      Tomato.pause(tomato, now);
-      expect(tomato.remaining).toBe(min25 - 1234);
+      TimerContext.pause(context, now);
+      expect(context.remaining).toBe(min25 - 1234);
     });
   });
 
   describe('restart()', () => {
     beforeEach(() => {
-      Tomato.pause(tomato, now);
-      Tomato.restart(tomato, now + 3000);
+      TimerContext.pause(context, now);
+      TimerContext.restart(context, now + 3000);
     });
 
     it('starts running', () => {
-      expect(tomato.running).toBe(true);
+      expect(context.running).toBe(true);
     });
 
     it('does not break if not paused', () => {
-      Tomato.restart(tomato, now + 4000);
-      expect(tomato.startedAt).toBe(now + 3000);
+      TimerContext.restart(context, now + 4000);
+      expect(context.sessionStartedAt).toBe(now + 3000);
     });
   });
 });
