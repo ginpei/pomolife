@@ -2,10 +2,10 @@
   display: grid;
   gap: 0.4rem 0;
   grid-template:
-    "toggle heading remaining" auto
-    "toggle clock   remaining" auto
-    "task   task    task     " auto
-    / 3rem auto auto;
+    "heading remaining" auto
+    "clock   remaining" auto
+    "task    task     " auto
+    / auto auto;
 }
 
 h1.TimerConsole-heading {
@@ -30,21 +30,6 @@ h1.TimerConsole-heading {
   }
 }
 
-button.TimerConsole-toggle {
-  background-color: lightgray;
-  border-style: none;
-  grid-area: toggle;
-  margin-right: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-}
-
-.TimerConsole-toggleLabel {
-  font-size: 0.5rem;
-}
-
 .TimerConsole-runningIndicator {
   animation: flashing 1s infinite step-end;
 
@@ -54,7 +39,40 @@ button.TimerConsole-toggle {
   }
 }
 
-.TimerConsole-task {
+.TimerConsole-taskList {
+  display: flex;
   grid-area: task;
-  height: 2rem;
+  overflow: auto;
+}
+
+button.TimerConsole-TaskButton {
+  align-items: center;
+  background-color: lightgray;
+  border-color: transparent;
+  border-style: none none solid;
+  border-width: 0.3em;
+  box-shadow: 0 0 0 0.1em white;
+  display: inline-flex;
+  flex-direction: column;
+  font-size: 1.5rem;
+  grid-area: toggle;
+  justify-content: space-evenly;
+  margin-right: 0.5em;
+  min-width: 3em;
+  padding: 0.4em;
+
+  &[data-active="true"] {
+    border-bottom-color: skyblue;
+    left: 0;
+    position: sticky;
+    right: 0;
+  }
+
+  &[data-system="true"] {
+    margin-left: 1rem;
+  }
+}
+
+.TimerConsole-TaskButton-label {
+  font-size: 0.5rem;
 }
