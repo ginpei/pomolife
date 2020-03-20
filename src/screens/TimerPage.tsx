@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BasicLayout } from '../complexes/BasicLayout';
+import { TimerConsole } from '../complexes/TimerConsole';
 import * as Activity from '../models/Activity';
 import * as TimerContext from '../models/TimerContext';
 import { TimerActivityItem } from '../simples/TimerActivityItem';
@@ -95,7 +96,7 @@ export const TimerPage: React.FC = () => {
   return (
     <div className="TimerPage">
       <header className="TimerPage-header">
-        <TimerPageHeader />
+        <TimerConsole />
       </header>
       <div className="TimerPage-body">
         <div className="TimerActivityItemList">
@@ -123,31 +124,6 @@ export const TimerPage: React.FC = () => {
           <TimerForm />
         </div>
       </footer>
-    </div>
-  );
-};
-
-const TimerPageHeader: React.FC<{
-}> = (props) => {
-  return (
-    <div className="TimerPageHeader ui-container">
-      <h1 className="TimerPageHeader-heading ui-center">Current Sprint</h1>
-      <div className="TimerPageHeader-clock ui-center">
-        12:00 - 12:30
-      </div>
-      <div className="TimerPageHeader-remaining ui-center">
-        25 min
-        <span className="TimerPageHeader-runningIndicator">.</span>
-      </div>
-      <button className="TimerPageHeader-toggle">
-        <span role="img" aria-label="Play">▶️</span>
-        <span className="TimerPageHeader-toggleLabel">Logging</span>
-      </button>
-      <input
-        className="TimerPageHeader-task"
-        placeholder="Task (e.g. Homework, Game, Exercise)"
-        type="text"
-      />
     </div>
   );
 };

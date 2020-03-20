@@ -20,66 +20,6 @@
   width: 100%;
 }
 
-.TimerPageHeader {
-  display: grid;
-  gap: 0.4rem 0;
-  grid-template:
-    "toggle heading remaining" auto
-    "toggle clock   remaining" auto
-    "task   task    task     " auto
-    / 3rem auto auto;
-}
-
-h1.TimerPageHeader-heading {
-  font-size: 1rem;
-  margin: 0;
-  grid-area: heading;
-}
-
-.TimerPageHeader-clock {
-  grid-area: clock;
-}
-
-.TimerPageHeader-remaining {
-  font-size: 3rem;
-  font-weight: bold;
-  grid-area: remaining;
-
-  @media screen and (max-width: 480px) {
-    & {
-      font-size: 10vw;
-    }
-  }
-}
-
-button.TimerPageHeader-toggle {
-  background-color: lightgray;
-  border-style: none;
-  grid-area: toggle;
-  margin-right: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-}
-
-.TimerPageHeader-toggleLabel {
-  font-size: 0.5rem;
-}
-
-.TimerPageHeader-runningIndicator {
-  animation: flashing 1s infinite step-end;
-
-  @keyframes flashing {
-    0% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-}
-
-.TimerPageHeader-task {
-  grid-area: task;
-  height: 2rem;
-}
 
 .ActivityFeelingInputList-item {
   & + & {
