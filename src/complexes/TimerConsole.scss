@@ -45,6 +45,14 @@ h1.TimerConsole-heading {
   overflow: auto;
 }
 
+.TimerConsole-RunningIndicator {
+  visibility: hidden;
+
+  &[data-on="true"] {
+    visibility: visible;
+  }
+}
+
 button.TimerConsole-TaskButton {
   align-items: center;
   background-color: lightgray;

@@ -31,16 +31,3 @@ export const TimerPage: React.FC = () => {
     </div>
   );
 };
-
-// /**
-//  * Returns remaining time in human readable style.
-//  */
-// function ht(ms: number): string {
-//   const s = Math.ceil(ms / 1000);
-//   if (s < 60) {
-//     return `${s} sec`;
-//   }
-
-//   const m = Math.ceil(s / 60);
-//   return `${m} min`;
-// }

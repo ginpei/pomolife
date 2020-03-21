@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './TimerConsole.scss';
+import { useClock, toSprintTime, toReadableElapse } from '../models/Clock';
 
 type TomatoTask = {
   emoji: string;
@@ -49,6 +50,7 @@ const settingsTask: TomatoTask = {
 
 export const TimerConsole: React.FC<{}> = (props) => {
   const [currentTask, setCurrentTask] = useState(noneTask);
+  const [now] = useClock();
 
   const onTaskClick = (task: TomatoTask) => {
     if (task === settingsTask) {
@@ -58,15 +60,18 @@ export const TimerConsole: React.FC<{}> = (props) => {
     setCurrentTask(task);
   };
 
+  const [dStart, dEnd] = getSprintTimes(now);
+  const remaining = dEnd.getTime() - now;
+
   return (
     <div className="TimerConsole ui-container">
       <h1 className="TimerConsole-heading ui-center">Current Sprint</h1>
       <div className="TimerConsole-clock ui-center">
-        12:00 - 12:30
+        {toSprintTime(dStart)} - {toSprintTime(dEnd)}
       </div>
       <div className="TimerConsole-remaining ui-center">
-        25 min
-        <span className="TimerConsole-runningIndicator">.</span>
+        {toReadableElapse(remaining)}
+        <RunningIndicator now={now} />
       </div>
       <div className="TimerConsole-taskList">
         <TaskButton
@@ -115,3 +120,32 @@ const TaskButton: React.FC<{
     </button>
   );
 };
+
+const RunningIndicator: React.FC<{ now: number }> = ({ now }) => {
+  const on = now !== 0 && now % 1000 < 500;
+
+  return (
+    <span
+      className="TimerConsole-RunningIndicator"
+      data-on={on}
+    >
+      .
+    </span>
+  );
+};
+
+function getSprintTimes(now: number): [Date, Date] {
+  const numHourlySprints = 2;
+  const sprintPeriod = 60 / numHourlySprints; // in min
+
+  const d = new Date(now);
+  d.setSeconds(0);
+  d.setMilliseconds(0);
+
+  const min = d.getMinutes();
+  d.setMinutes(min - min % sprintPeriod);
+
+  const dEnd = new Date(d.getTime() + sprintPeriod * 1000 * 60);
+
+  return [d, dEnd];
+}
