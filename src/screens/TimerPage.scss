@@ -20,9 +20,11 @@
   width: 100%;
 }
 
+.TimerPage-activityList {
+  background-color: #f0f0f0;
+  padding-bottom: 30vh;
 
-.ActivityFeelingInputList-item {
-  & + & {
-    margin-left: 1em;
+  .TimerActivityItem {
+    background-color: white;
   }
 }
