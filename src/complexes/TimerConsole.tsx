@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { getSprintTimes, toReadableElapse, toSprintTime, useClock } from '../models/Clock';
 import './TimerConsole.scss';
-import { useClock, toSprintTime, toReadableElapse } from '../models/Clock';
 
 type TomatoTask = {
   emoji: string;
@@ -133,19 +133,3 @@ const RunningIndicator: React.FC<{ now: number }> = ({ now }) => {
     </span>
   );
 };
-
-function getSprintTimes(now: number): [Date, Date] {
-  const numHourlySprints = 2;
-  const sprintPeriod = 60 / numHourlySprints; // in min
-
-  const d = new Date(now);
-  d.setSeconds(0);
-  d.setMilliseconds(0);
-
-  const min = d.getMinutes();
-  d.setMinutes(min - min % sprintPeriod);
-
-  const dEnd = new Date(d.getTime() + sprintPeriod * 1000 * 60);
-
-  return [d, dEnd];
-}

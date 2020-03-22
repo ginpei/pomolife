@@ -15,6 +15,41 @@ export function useClock() {
   return [now];
 }
 
+export function useBeyondSprintEffect(
+  callback: (lastPeriod: number, period: number) => void,
+) {
+  const [now] =  useClock();
+  const [curPeriod, setCurPeriod] = useState(0);
+  const [, dEnd] = getSprintTimes(now);
+
+  const tEnd = dEnd.getTime();
+  if (now !== 0 && tEnd !== curPeriod) {
+    const lastPeriod = curPeriod;
+    setCurPeriod(tEnd);
+
+    const initial = lastPeriod === 0;
+    if (!initial) {
+      callback(lastPeriod, tEnd);
+    }
+  }
+}
+
+export function getSprintTimes(now: number): [Date, Date] {
+  const numHourlySprints = 60;
+  const sprintPeriod = 60 / numHourlySprints; // in min
+
+  const d = new Date(now);
+  d.setSeconds(0);
+  d.setMilliseconds(0);
+
+  const min = d.getMinutes();
+  d.setMinutes(min - min % sprintPeriod);
+
+  const dEnd = new Date(d.getTime() + sprintPeriod * 1000 * 60);
+
+  return [d, dEnd];
+}
+
 /**
  * Returns remaining time in human readable style.
  * @example

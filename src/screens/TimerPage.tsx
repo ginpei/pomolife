@@ -4,9 +4,13 @@ import * as Activity from '../models/Activity';
 import { TimerActivityItem } from '../simples/TimerActivityItem';
 import { TimerForm } from '../simples/TimerForm';
 import './TimerPage.scss';
+import { useBeyondSprintEffect } from '../models/Clock';
 
 export const TimerPage: React.FC = () => {
   const [activityLog] = useState(Activity.dummyActivities);
+  useBeyondSprintEffect((lastPeriod, period) => {
+    return console.log('# period', new Date(lastPeriod), new Date(period));
+  });
 
   return (
     <div className="TimerPage">
