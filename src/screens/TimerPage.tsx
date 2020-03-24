@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, createRef } from 'react';
 import { TimerConsole } from '../complexes/TimerConsole';
 import * as Activity from '../models/Activity';
 import { TimerActivityItem } from '../simples/TimerActivityItem';
@@ -8,9 +8,6 @@ import { useBeyondSprintEffect } from '../models/Clock';
 
 export const TimerPage: React.FC = () => {
   const [activityLog] = useState(Activity.dummyActivities);
-  useBeyondSprintEffect((lastPeriod, period) => {
-    return console.log('# period', new Date(lastPeriod), new Date(period));
-  });
 
   return (
     <div className="TimerPage">
@@ -32,6 +29,34 @@ export const TimerPage: React.FC = () => {
           <TimerForm />
         </div>
       </footer>
+      <ChimePopup />
+    </div>
+  );
+};
+
+const ChimePopup: React.FC = () => {
+  const url = '/D0002011518_00000_A_001.m4a';
+  const [bell] = useState(new Audio(url));
+  const [visible, setVisible] = useState(false);
+
+  useBeyondSprintEffect(() => {
+    setVisible(true);
+    bell.currentTime = 0;
+    bell.play();
+  });
+
+  const onStopClick = () => {
+    setVisible(false);
+    bell.pause();
+  };
+
+  return (
+    <div className="TimerPage-ChimePopup" data-visible={visible}>
+      <div className="ui-container">
+        <div className="TimerPage-ChimePopup-inner" onClick={onStopClick}>
+          <span role="img" aria-label="">🔔</span> Tap to stop ringing
+        </div>
+      </div>
     </div>
   );
 };
