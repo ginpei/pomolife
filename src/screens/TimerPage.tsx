@@ -35,7 +35,7 @@ export const TimerPage: React.FC = () => {
 };
 
 const ChimePopup: React.FC = () => {
-  const url = '/D0002011518_00000_A_001.m4a';
+  const url = '/D0002070098_00000_A_001.m4a';
   const [bell] = useState(new Audio(url));
   const [visible, setVisible] = useState(false);
 
