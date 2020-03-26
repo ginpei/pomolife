@@ -11,8 +11,8 @@ export const TimerPage: React.FC = () => {
   const url = '/D0002070098_00000_A_001.m4a';
   const [bell] = useState(new Audio(url));
   const [currentTask, setCurrentTask] = useState(noneTask);
-  const [activityLog, setActivityLog] = useState<Activity.Activity[]>([]);
-  const [popupVisible, setPopupVisible] = useState(false);
+  const [activityLog, setActivityLog] = useState<Activity.Activity[]>(Activity.dummyActivities);
+  const [editingActivity, setEditingActivity] = useState<Activity.Activity | null>(null);
 
   useBeyondSprintEffect((lastPeriod) => {
     // do nothing if not tracking
@@ -20,18 +20,22 @@ export const TimerPage: React.FC = () => {
       return;
     }
 
+    // sound
     bell.currentTime = 0;
     bell.play();
 
-    activityLog.push({
+    // add a new activity
+    const latestActivity: Activity.Activity = {
       doneAt: lastPeriod,
       elapse: 0,
       feeling: '',
       title: currentTask.label,
-    });
+    };
+    activityLog.push(latestActivity);
     setActivityLog(activityLog);
 
-    setPopupVisible(true);
+    // open activity edit popup
+    setEditingActivity(latestActivity);
   });
 
   const onTaskSelect = (task: TomatoTask) => {
@@ -42,16 +46,23 @@ export const TimerPage: React.FC = () => {
     setCurrentTask(task);
   };
 
-  const onLastFeelingSelect = (feeling: Activity.ActivityFeeling | null) => {
+  const onActivityClick = (activity: Activity.Activity) => {
+    if (editingActivity === activity) {
+      setEditingActivity(null);
+    } else {
+      setEditingActivity(activity);
+    }
+  };
+
+  const onLastFeelingSelect = (activity: Activity.Activity, feeling: Activity.ActivityFeeling | null) => {
     bell.pause();
 
-    const lastActivity = activityLog[activityLog.length - 1];
-    if (lastActivity && feeling !== null) {
-      lastActivity.feeling = feeling;
+    if (activity && feeling !== null) {
+      activity.feeling = feeling;
       setActivityLog(activityLog);
     }
 
-    setPopupVisible(false);
+    setEditingActivity(null);
   };
 
   return (
@@ -68,6 +79,8 @@ export const TimerPage: React.FC = () => {
             <TimerActivityItem
               activity={activity}
               key={activity.doneAt}
+              onClick={onActivityClick}
+              selected={activity === editingActivity}
             />
           ))}
         </div>
@@ -78,20 +91,23 @@ export const TimerPage: React.FC = () => {
         </div>
       </footer>
       <FeelingPopup
+        activity={editingActivity}
         onSelect={onLastFeelingSelect}
-        visible={popupVisible}
       />
     </div>
   );
 };
 
 const FeelingPopup: React.FC<{
-  onSelect: (feeling: Activity.ActivityFeeling | null) => void;
-  visible: boolean;
-}> = ({ onSelect, visible }) => {
+  activity: Activity.Activity | null;
+  onSelect: (activity: Activity.Activity, feeling: Activity.ActivityFeeling | null) => void;
+}> = ({ activity, onSelect }) => {
   const feelings: Activity.ActivityFeeling[] = ['great', 'good', 'bad'];
 
-  const onDismissClick = () => onSelect(null);
+  const visible = activity !== null;
+
+  const onDismissClick = () => onSelect(activity!, null);
+  const onFeelingClick = (feeling: Activity.ActivityFeeling) => onSelect(activity!, feeling);
 
   return (
     <div className="TimerPage-FeelingPopup" data-visible={visible}>
@@ -113,7 +129,7 @@ const FeelingPopup: React.FC<{
               <FeelingButton
                 feeling={feeling}
                 key={feeling}
-                onClick={onSelect}
+                onClick={onFeelingClick}
               />
             ))}
           </div>

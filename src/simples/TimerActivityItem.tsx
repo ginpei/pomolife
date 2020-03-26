@@ -5,11 +5,17 @@ import './TimerActivityItem.scss';
 
 export const TimerActivityItem: React.FC<{
   activity: Activity;
-}> = (props) => {
-  const { activity } = props;
+  onClick: (activity: Activity) => void;
+  selected: boolean;
+}> = ({ activity, onClick, selected }) => {
+  const onItemClick = () => onClick(activity);
 
   return (
-    <article className="TimerActivityItem">
+    <article
+      className="TimerActivityItem"
+      data-selected={selected}
+      onClick={onItemClick}
+    >
       <div className="TimerActivityItem-container ui-container">
         <span className="TimerActivityItem-feeling">
           <ActivityFeelingIcon feeling={activity.feeling} />
