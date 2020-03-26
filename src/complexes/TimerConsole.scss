@@ -70,7 +70,7 @@ button.TimerConsole-TaskButton {
   padding: 0.4em;
 
   &[data-active="true"] {
-    border-bottom-color: skyblue;
+    border-bottom-color: var(--c-active);
     left: 0;
     position: sticky;
     right: 0;
