@@ -42,16 +42,14 @@ export const TimerPage: React.FC = () => {
     setCurrentTask(task);
   };
 
-  const onLastFeelingSelect = (feeling: Activity.ActivityFeeling) => {
+  const onLastFeelingSelect = (feeling: Activity.ActivityFeeling | null) => {
     bell.pause();
 
     const lastActivity = activityLog[activityLog.length - 1];
-    if (!lastActivity) {
-      return;
+    if (lastActivity && feeling !== null) {
+      lastActivity.feeling = feeling;
+      setActivityLog(activityLog);
     }
-
-    lastActivity.feeling = feeling;
-    setActivityLog(activityLog);
 
     setPopupVisible(false);
   };
@@ -88,15 +86,23 @@ export const TimerPage: React.FC = () => {
 };
 
 const FeelingPopup: React.FC<{
-  onSelect: (feeling: Activity.ActivityFeeling) => void;
+  onSelect: (feeling: Activity.ActivityFeeling | null) => void;
   visible: boolean;
 }> = ({ onSelect, visible }) => {
   const feelings: Activity.ActivityFeeling[] = ['great', 'good', 'bad'];
+
+  const onDismissClick = () => onSelect(null);
 
   return (
     <div className="TimerPage-FeelingPopup" data-visible={visible}>
       <div className="ui-container">
         <div className="TimerPage-FeelingPopup-inner">
+          <div
+            className="TimerPage-FeelingPopup-dismiss"
+            onClick={onDismissClick}
+          >
+            ×
+          </div>
           <h1 className="TimerPage-FeelingPopup-heading">
             <span role="img" aria-label="">🔔</span>
             {' '}
