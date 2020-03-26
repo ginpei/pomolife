@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const numHourlySprints = Number((window as any).g_params.sprints) || 2;
+const numHourlySprints = Number((window as any).g_params?.sprints) || 2;
 
 /**
  * @example
