@@ -12,7 +12,18 @@ export const TimerPage: React.FC = () => {
   const [bell] = useState(new Audio(url));
   const [currentTask, setCurrentTask] = useState(noneTask);
   const [activityLog, setActivityLog] = useState<Activity.Activity[]>(Activity.dummyActivities);
-  const [editingActivity, setEditingActivity] = useState<Activity.Activity | null>(null);
+  const [editingActivity, setEditingActivityValue] = useState<Activity.Activity | null>(null);
+
+  const setEditingActivity: typeof setEditingActivityValue = (activity) => {
+    if (editingActivity && activity) {
+      setEditingActivityValue(null);
+
+      // omit timing conflict as it should be OK...
+      window.setTimeout(() => setEditingActivityValue(activity), 100);
+    } else {
+      setEditingActivityValue(activity);
+    }
+  };
 
   useBeyondSprintEffect((lastPeriod) => {
     // do nothing if not tracking
