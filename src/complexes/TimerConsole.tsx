@@ -1,64 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { getSprintTimes, toReadableElapse, toSprintTime, useClock } from '../models/Clock';
+import { noneTask, settingsTask, tasks, TomatoTask } from '../models/Task';
 import './TimerConsole.scss';
 
-type TomatoTask = {
-  emoji: string;
-  id: string;
-  label: string;
-}
-
-const dummyTasks: TomatoTask[] = [
-  {
-    emoji: '😎',
-    id: '',
-    label: 'Working',
-  },
-  {
-    emoji: '🎮',
-    id: '',
-    label: 'Having fun',
-  },
-  {
-    emoji: '🏃🏽',
-    id: '',
-    label: 'Exercising',
-  },
-  {
-    emoji: '🍵',
-    id: '',
-    label: 'Having break',
-  },
-];
-
-const tasks: TomatoTask[] = Array.from({ length: 9 }, (v, i) => ({
-  ...(dummyTasks[Math.floor(Math.random() * dummyTasks.length)]),
-  id: String(i),
-}));
-
-const noneTask: TomatoTask = {
-  emoji: '⏸️',
-  id: 'none',
-  label: '(None)',
-};
-
-const settingsTask: TomatoTask = {
-  emoji: '⚙',
-  id: 'setting',
-  label: 'Settings',
-};
-
-export const TimerConsole: React.FC<{}> = (props) => {
-  const [currentTask, setCurrentTask] = useState(noneTask);
+export const TimerConsole: React.FC<{
+  currentTask: TomatoTask;
+  onSelect: (task: TomatoTask) => void;
+}> = ({ currentTask, onSelect }) => {
   const [now] = useClock();
-
-  const onTaskClick = (task: TomatoTask) => {
-    if (task === settingsTask) {
-      return;
-    }
-
-    setCurrentTask(task);
-  };
 
   const [dStart, dEnd] = getSprintTimes(now);
   const remaining = dEnd.getTime() - now;
@@ -76,20 +25,20 @@ export const TimerConsole: React.FC<{}> = (props) => {
       <div className="TimerConsole-taskList">
         <TaskButton
           active={noneTask === currentTask}
-          onClick={onTaskClick}
+          onClick={onSelect}
           task={noneTask}
         />
         {tasks.map((task) => (
           <TaskButton
             active={task === currentTask}
             key={task.id}
-            onClick={onTaskClick}
+            onClick={onSelect}
             task={task}
           />
         ))}
         <TaskButton
           active={false}
-          onClick={onTaskClick}
+          onClick={onSelect}
           isSystem={true}
           task={settingsTask}
         />

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TimerConsole } from '../complexes/TimerConsole';
 import * as Activity from '../models/Activity';
 import { useBeyondSprintEffect } from '../models/Clock';
+import { noneTask, settingsTask, TomatoTask } from '../models/Task';
 import { TimerActivityItem } from '../simples/TimerActivityItem';
 import { TimerForm } from '../simples/TimerForm';
 import './TimerPage.scss';
@@ -9,10 +10,16 @@ import './TimerPage.scss';
 export const TimerPage: React.FC = () => {
   const url = '/D0002070098_00000_A_001.m4a';
   const [bell] = useState(new Audio(url));
+  const [currentTask, setCurrentTask] = useState(noneTask);
   const [activityLog, setActivityLog] = useState<Activity.Activity[]>([]);
   const [popupVisible, setPopupVisible] = useState(false);
 
   useBeyondSprintEffect((lastPeriod) => {
+    // do nothing if not tracking
+    if (currentTask === noneTask) {
+      return;
+    }
+
     bell.currentTime = 0;
     bell.play();
 
@@ -20,12 +27,20 @@ export const TimerPage: React.FC = () => {
       doneAt: lastPeriod,
       elapse: 0,
       feeling: '',
-      title: '',
+      title: currentTask.label,
     });
     setActivityLog(activityLog);
 
     setPopupVisible(true);
   });
+
+  const onTaskSelect = (task: TomatoTask) => {
+    if (task === settingsTask) {
+      return;
+    }
+
+    setCurrentTask(task);
+  };
 
   const onLastFeelingSelect = (feeling: Activity.ActivityFeeling) => {
     bell.pause();
@@ -44,7 +59,10 @@ export const TimerPage: React.FC = () => {
   return (
     <div className="TimerPage">
       <header className="TimerPage-header">
-        <TimerConsole />
+        <TimerConsole
+          currentTask={currentTask}
+          onSelect={onTaskSelect}
+        />
       </header>
       <div className="TimerPage-body">
         <div className="TimerPage-activityList">
