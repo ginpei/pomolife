@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const numHourlySprints = Number((window as any).g_params.sprints) || 2;
+
 /**
  * @example
  * const [now] = useClock();
@@ -35,7 +37,6 @@ export function useBeyondSprintEffect(
 }
 
 export function getSprintTimes(now: number): [Date, Date] {
-  const numHourlySprints = 60;
   const sprintPeriod = 60 / numHourlySprints; // in min
 
   const d = new Date(now);
