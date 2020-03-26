@@ -22,6 +22,7 @@
 
 .TimerPage-activityList {
   background-color: #f0f0f0;
+  min-height: calc(100% - 30vh);
   padding-bottom: 30vh;
 
   .TimerActivityItem {
@@ -29,7 +30,7 @@
   }
 }
 
-.TimerPage-ChimePopup {
+.TimerPage-FeelingPopup {
   bottom: 0.5rem;
   position: fixed;
   transition: opacity 300ms, transform 300ms;
@@ -47,10 +48,29 @@
   }
 }
 
-.TimerPage-ChimePopup-inner {
+.TimerPage-FeelingPopup-inner {
   background-color: #090c;
   border: 2px solid #090;
   border-radius: 0.2rem;
   color: white;
   padding: 1rem;
+}
+
+.TimerPage-FeelingPopup-heading {
+  font-size: 1rem;
+  margin-top: 0;
+}
+
+.TimerPage-FeelingPopup-feelingList {
+  display: flex;
+
+  & > *:not(:last-child) {
+    margin-right: 1rem;
+  }
+}
+
+.TimerPage-FeelingButton {
+  flex-grow: 1;
+  height: 4rem;
+  width: 100%;
 }
