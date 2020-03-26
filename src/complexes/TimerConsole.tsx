@@ -7,6 +7,8 @@ export const TimerConsole: React.FC<{
   currentTask: TomatoTask;
   onSelect: (task: TomatoTask) => void;
 }> = ({ currentTask, onSelect }) => {
+  const tracking = currentTask !== noneTask;
+
   const [now] = useClock();
 
   const [dStart, dEnd] = getSprintTimes(now);
@@ -18,7 +20,7 @@ export const TimerConsole: React.FC<{
       <div className="TimerConsole-clock ui-center">
         {toSprintTime(dStart)} - {toSprintTime(dEnd)}
       </div>
-      <div className="TimerConsole-remaining ui-center">
+      <div className="TimerConsole-remaining ui-center" data-active={tracking}>
         {toReadableElapse(remaining)}
         <RunningIndicator now={now} />
       </div>

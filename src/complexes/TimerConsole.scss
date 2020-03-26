@@ -23,6 +23,10 @@ h1.TimerConsole-heading {
   font-weight: bold;
   grid-area: remaining;
 
+  &[data-active="false"] {
+    color: lightgray;
+  }
+
   @media screen and (max-width: 480px) {
     & {
       font-size: 10vw;
