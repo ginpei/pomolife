@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TimerConsole } from '../complexes/TimerConsole';
-import * as Activity from '../models/Activity';
+import { Activity, ActivityFeeling, dummyActivities, getEmoji } from '../models/Activity';
 import { useBeyondSprintEffect } from '../models/Clock';
 import { noneTask, settingsTask, TomatoTask } from '../models/Task';
 import { TimerActivityItem } from '../simples/TimerActivityItem';
@@ -11,8 +11,8 @@ export const TimerPage: React.FC = () => {
   const url = '/D0002070098_00000_A_001.m4a';
   const [bell] = useState(new Audio(url));
   const [currentTask, setCurrentTask] = useState(noneTask);
-  const [activityLog, setActivityLog] = useState<Activity.Activity[]>(Activity.dummyActivities);
-  const [editingActivity, setEditingActivityValue] = useState<Activity.Activity | null>(null);
+  const [activityLog, setActivityLog] = useState<Activity[]>(dummyActivities);
+  const [editingActivity, setEditingActivityValue] = useState<Activity | null>(null);
 
   const setEditingActivity: typeof setEditingActivityValue = (activity) => {
     if (editingActivity && activity) {
@@ -36,7 +36,7 @@ export const TimerPage: React.FC = () => {
     bell.play();
 
     // add a new activity
-    const latestActivity: Activity.Activity = {
+    const latestActivity: Activity = {
       doneAt: lastPeriod,
       elapse: 0,
       feeling: '',
@@ -57,7 +57,7 @@ export const TimerPage: React.FC = () => {
     setCurrentTask(task);
   };
 
-  const onActivityClick = (activity: Activity.Activity) => {
+  const onActivityClick = (activity: Activity) => {
     if (editingActivity === activity) {
       setEditingActivity(null);
     } else {
@@ -65,7 +65,7 @@ export const TimerPage: React.FC = () => {
     }
   };
 
-  const onLastFeelingSelect = (activity: Activity.Activity, feeling: Activity.ActivityFeeling | null) => {
+  const onLastFeelingSelect = (activity: Activity, feeling: ActivityFeeling | null) => {
     bell.pause();
 
     if (activity && feeling !== null) {
@@ -110,15 +110,15 @@ export const TimerPage: React.FC = () => {
 };
 
 const FeelingPopup: React.FC<{
-  activity: Activity.Activity | null;
-  onSelect: (activity: Activity.Activity, feeling: Activity.ActivityFeeling | null) => void;
+  activity: Activity | null;
+  onSelect: (activity: Activity, feeling: ActivityFeeling | null) => void;
 }> = ({ activity, onSelect }) => {
-  const feelings: Activity.ActivityFeeling[] = ['great', 'good', 'bad'];
+  const feelings: ActivityFeeling[] = ['great', 'good', 'bad'];
 
   const visible = activity !== null;
 
   const onDismissClick = () => onSelect(activity!, null);
-  const onFeelingClick = (feeling: Activity.ActivityFeeling) => onSelect(activity!, feeling);
+  const onFeelingClick = (feeling: ActivityFeeling) => onSelect(activity!, feeling);
 
   return (
     <div className="TimerPage-FeelingPopup" data-visible={visible}>
@@ -151,10 +151,10 @@ const FeelingPopup: React.FC<{
 };
 
 const FeelingButton: React.FC<{
-  feeling: Activity.ActivityFeeling;
-  onClick: (feeling: Activity.ActivityFeeling) => void;
+  feeling: ActivityFeeling;
+  onClick: (feeling: ActivityFeeling) => void;
 }> = ({ feeling, onClick }) => {
-  const emoji = Activity.getEmoji(feeling);
+  const emoji = getEmoji(feeling);
 
   let text;
   if (feeling === 'great') {
