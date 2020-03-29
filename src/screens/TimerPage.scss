@@ -53,15 +53,20 @@
   position: relative;
 }
 
-.TimerPage-FeelingPopup-dismiss {
-  align-items: center;
-  display: flex;
+button.TimerPage-FeelingPopup-dismiss {
+  background-color: transparent;
+  border-style: none;
+  color: inherit;
+  cursor: pointer;
   height: 2rem;
-  justify-content: center;
   position: absolute;
   right: 0;
   top: 0;
   width: 2rem;
+
+  &:hover {
+    outline: 1px solid var(--c-active);
+  }
 }
 
 .TimerPage-FeelingPopup-heading {

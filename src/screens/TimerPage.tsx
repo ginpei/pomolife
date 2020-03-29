@@ -130,12 +130,12 @@ const FeelingPopup: React.FC<{
     <div className="TimerPage-FeelingPopup" data-visible={visible}>
       <div className="ui-container">
         <div className="TimerPage-FeelingPopup-inner">
-          <div
+          <button
             className="TimerPage-FeelingPopup-dismiss"
             onClick={onDismissClick}
           >
             ×
-          </div>
+          </button>
           <h1 className="TimerPage-FeelingPopup-heading">
             <span role="img" aria-label="">🔔</span>
             {' '}
