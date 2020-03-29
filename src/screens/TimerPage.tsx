@@ -13,6 +13,7 @@ export const TimerPage: React.FC = () => {
   const [currentTask, setCurrentTask] = useState(noneTask);
   const [activityLog, setActivityLog] = useState<Activity[]>(dummyActivities);
   const [editingActivity, setEditingActivityValue] = useState<Activity | null>(null);
+  const [sessionStartAt, setSessionStartAt] = useState(0);
 
   const setEditingActivity: typeof setEditingActivityValue = (activity) => {
     if (editingActivity && activity) {
@@ -35,11 +36,15 @@ export const TimerPage: React.FC = () => {
     bell.currentTime = 0;
     bell.play();
 
+    const lastActivity = activityLog[activityLog.length - 1];
+    const startAt = Math.max(lastActivity.endAt, sessionStartAt);
+
     // add a new activity
     const latestActivity: Activity = {
-      doneAt: lastPeriod,
-      elapse: 0,
+      endAt: lastPeriod,
       feeling: '',
+      id: `${Math.random}`.slice(2),
+      startAt,
       title: currentTask.label,
     };
     activityLog.push(latestActivity);
@@ -55,6 +60,7 @@ export const TimerPage: React.FC = () => {
     }
 
     setCurrentTask(task);
+    setSessionStartAt(Date.now());
   };
 
   const onActivityClick = (activity: Activity) => {
@@ -89,7 +95,7 @@ export const TimerPage: React.FC = () => {
           {activityLog.map((activity) => (
             <TimerActivityItem
               activity={activity}
-              key={activity.doneAt}
+              key={activity.endAt}
               onClick={onActivityClick}
               selected={activity === editingActivity}
             />

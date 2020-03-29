@@ -66,6 +66,11 @@ export function toReadableElapse(ms: number): string {
   return `${m} min`;
 }
 
+export function toReadableTime(time: number): string {
+  const d = new Date(time);
+  return toSprintTime(d); // TODO
+}
+
 export function toSprintTime(d: Date): string {
   const hh = to2digits(d.getHours());
   const mm = to2digits(d.getMinutes());

@@ -1,7 +1,8 @@
 export type Activity = {
-  doneAt: number;
-  elapse: number;
+  endAt: number;
   feeling: ActivityFeeling;
+  id: string;
+  startAt: number;
   title: string;
 }
 
@@ -16,9 +17,10 @@ export type ActivityFeeling = keyof typeof ActivityFeeling;
 
 export function getNewActivity(): Activity {
   return {
-    doneAt: 0,
-    elapse: 0,
+    endAt: 0,
     feeling: '',
+    id: '',
+    startAt: 0,
     title: '',
   }
 }
@@ -40,41 +42,33 @@ export function getEmoji(feeling: ActivityFeeling) {
 }
 
 export function setDone(activity: Activity, now = Date.now()) {
-  activity.doneAt = now;
+  activity.endAt = now;
 }
 
+const dummyStartAt = new Date();
+dummyStartAt.setMinutes(0);
+dummyStartAt.setSeconds(0);
+dummyStartAt.setMilliseconds(0);
 
-const dummyActivitySource: Activity[] = [
-  {
-    doneAt: new Date('2020/04/14 12:00:00.0000Z').getTime(),
-    elapse: 25 * 1000 * 60,
-    feeling: 'great',
-    title: 'hoge',
-  },
-  {
-    doneAt: new Date('2020/04/14 12:25:00.0000Z').getTime(),
-    elapse: 25 * 1000 * 60,
-    feeling: 'good',
-    title: 'fuga',
-  },
-  {
-    doneAt: new Date('2020/04/14 12:50:00.0000Z').getTime(),
-    elapse: 25 * 1000 * 60,
-    feeling: 'bad',
-    title: 'ugh',
-  },
-];
+function randomOf(arr: any[]) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+const min30 = 30 * 1000 * 60;
 
 export const dummyActivities: Activity[] = Array.from(
-  { length: 30 },
+  { length: 10 },
   (_, i) => {
-    const h24 = 24 * 1000 * 60 * 60;
-    const sourceIndex = Math.floor(Math.random() * dummyActivitySource.length);
-    const source = dummyActivitySource[sourceIndex];
+    const startAt = new Date(dummyStartAt.getTime() + (2 * i * min30)).getTime();
+    const feeling: ActivityFeeling = randomOf(Object.keys(ActivityFeeling));
+    const title = randomOf(['Working', 'Breaking']);
     const item: Activity = {
-      ...source,
-      doneAt: source.doneAt + Math.floor(Math.random() * h24),
+      endAt: startAt + min30,
+      feeling,
+      id: `${i + 100}`,
+      startAt,
+      title,
     };
     return item;
   },
-).sort((a, b) => a.doneAt - b.doneAt);
+).sort((a, b) => a.endAt - b.endAt);
