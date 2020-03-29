@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { TimerConsole } from '../complexes/TimerConsole';
-import { Activity, ActivityFeeling, dummyActivities, getEmoji } from '../models/Activity';
+import { Activity, ActivityFeeling, dummyActivities } from '../models/Activity';
 import { useBeyondSprintEffect } from '../models/Clock';
 import { noneTask, settingsTask, TomatoTask } from '../models/Task';
+import { ActivityEditPopup } from '../simples/ActivityEditPopup';
 import { TimerActivityItem } from '../simples/TimerActivityItem';
 import { TimerForm } from '../simples/TimerForm';
 import './TimerPage.scss';
@@ -107,77 +108,10 @@ export const TimerPage: React.FC = () => {
           <TimerForm />
         </div>
       </footer>
-      <FeelingPopup
+      <ActivityEditPopup
         activity={editingActivity}
         onSelect={onLastFeelingSelect}
       />
     </div>
-  );
-};
-
-const FeelingPopup: React.FC<{
-  activity: Activity | null;
-  onSelect: (activity: Activity, feeling: ActivityFeeling | null) => void;
-}> = ({ activity, onSelect }) => {
-  const feelings: ActivityFeeling[] = ['great', 'good', 'bad'];
-
-  const visible = activity !== null;
-
-  const onDismissClick = () => onSelect(activity!, null);
-  const onFeelingClick = (feeling: ActivityFeeling) => onSelect(activity!, feeling);
-
-  return (
-    <div className="TimerPage-FeelingPopup" data-visible={visible}>
-      <div className="ui-container">
-        <div className="TimerPage-FeelingPopup-inner">
-          <button
-            className="TimerPage-FeelingPopup-dismiss"
-            onClick={onDismissClick}
-          >
-            ×
-          </button>
-          <h1 className="TimerPage-FeelingPopup-heading">
-            <span role="img" aria-label="">🔔</span>
-            {' '}
-            How was the sprint?
-          </h1>
-          <div className="TimerPage-FeelingPopup-feelingList">
-            {feelings.map((feeling) => (
-              <FeelingButton
-                feeling={feeling}
-                key={feeling}
-                onClick={onFeelingClick}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const FeelingButton: React.FC<{
-  feeling: ActivityFeeling;
-  onClick: (feeling: ActivityFeeling) => void;
-}> = ({ feeling, onClick }) => {
-  const emoji = getEmoji(feeling);
-
-  let text;
-  if (feeling === 'great') {
-    text = 'Great!';
-  } else if (feeling === 'good') {
-    text = 'Good'
-  } else if (feeling === 'bad') {
-    text = 'Bad...'
-  }
-
-  const onButtonClick = () => onClick(feeling);
-
-  return (
-    <button className="TimerPage-FeelingButton" onClick={onButtonClick}>
-      {emoji}
-      <br/>
-      {text}
-    </button>
   );
 };

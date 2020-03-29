@@ -1,0 +1,61 @@
+.ActivityEditPopup {
+  bottom: 0.5rem;
+  position: fixed;
+  transition: opacity 300ms, transform 300ms;
+  width: 100%;
+
+  &[data-visible="false"] {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(1rem);
+  }
+
+  &[data-visible="true"] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ActivityEditPopup-inner {
+  background-color: #090c;
+  border: 2px solid #090;
+  border-radius: 0.2rem;
+  color: white;
+  padding: 1rem;
+  position: relative;
+}
+
+button.ActivityEditPopup-dismiss {
+  background-color: transparent;
+  border-style: none;
+  color: inherit;
+  cursor: pointer;
+  height: 2rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 2rem;
+
+  &:hover {
+    outline: 1px solid var(--c-active);
+  }
+}
+
+.ActivityEditPopup-heading {
+  font-size: 1rem;
+  margin-top: 0;
+}
+
+.ActivityEditPopup-feelingList {
+  display: flex;
+
+  & > *:not(:last-child) {
+    margin-right: 1rem;
+  }
+}
+
+.ActivityEditPopup-FeelingButton {
+  flex-grow: 1;
+  height: 4rem;
+  width: 100%;
+}
