@@ -34,6 +34,7 @@ export const ActivityEditPopup: React.FC<{
                 feeling={feeling}
                 key={feeling}
                 onClick={onFeelingClick}
+                selected={feeling === activity?.feeling}
               />
             ))}
           </div>
@@ -46,7 +47,8 @@ export const ActivityEditPopup: React.FC<{
 const FeelingButton: React.FC<{
   feeling: ActivityFeeling;
   onClick: (feeling: ActivityFeeling) => void;
-}> = ({ feeling, onClick }) => {
+  selected: boolean;
+}> = ({ feeling, onClick, selected }) => {
   const emoji = getEmoji(feeling);
 
   let text;
@@ -61,7 +63,11 @@ const FeelingButton: React.FC<{
   const onButtonClick = () => onClick(feeling);
 
   return (
-    <button className="ActivityEditPopup-FeelingButton" onClick={onButtonClick}>
+    <button
+      className="ActivityEditPopup-FeelingButton"
+      data-selected={selected}
+      onClick={onButtonClick}
+    >
       {emoji}
       <br/>
       {text}

@@ -54,8 +54,20 @@ button.ActivityEditPopup-dismiss {
   }
 }
 
-.ActivityEditPopup-FeelingButton {
+button.ActivityEditPopup-FeelingButton {
+  background-color: snow;
+  border: 1px solid gray;
   flex-grow: 1;
   height: 4rem;
   width: 100%;
+
+  &:hover,
+  &:active,
+  &[data-selected="true"] {
+    border: 1px solid var(--c-active);
+  }
+
+  &[data-selected="true"] {
+    font-weight: bold;
+  }
 }
