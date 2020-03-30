@@ -1,0 +1,94 @@
+.TimerConsole {
+  display: grid;
+  gap: 0.4rem 0;
+  grid-template:
+    "heading remaining" auto
+    "clock   remaining" auto
+    "task    task     " auto
+    / auto auto;
+}
+
+h1.heading {
+  font-size: 1rem;
+  margin: 0;
+  grid-area: heading;
+}
+
+.clock {
+  grid-area: clock;
+}
+
+.remaining {
+  font-size: 3rem;
+  font-weight: bold;
+  grid-area: remaining;
+
+  &[data-active="false"] {
+    visibility: hidden;
+
+    .RunningIndicator {
+      visibility: hidden; // overwrite
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    & {
+      font-size: 10vw;
+    }
+  }
+}
+
+.runningIndicator {
+  animation: flashing 1s infinite step-end;
+
+  @keyframes flashing {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+}
+
+.taskList {
+  display: flex;
+  grid-area: task;
+  overflow: auto;
+}
+
+.RunningIndicator {
+  visibility: hidden;
+
+  &[data-on="true"] {
+    visibility: visible;
+  }
+}
+
+button.TaskButton {
+  align-items: center;
+  background-color: lightgray;
+  border-color: transparent;
+  border-style: none none solid;
+  border-width: 0.3em;
+  box-shadow: 0 0 0 0.1em white;
+  display: inline-flex;
+  flex-direction: column;
+  font-size: 1.5rem;
+  grid-area: toggle;
+  justify-content: space-evenly;
+  margin-right: 0.5em;
+  min-width: 3em;
+  padding: 0.4em;
+
+  &[data-active="true"] {
+    border-bottom-color: var(--c-active);
+    left: 0;
+    position: sticky;
+    right: 0;
+  }
+
+  &[data-system="true"] {
+    margin-left: 1rem;
+  }
+}
+
+.TaskButton_label {
+  font-size: 0.5rem;
+}
