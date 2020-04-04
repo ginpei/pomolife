@@ -1,8 +1,11 @@
+import dynamic from 'next/dynamic';
 import React from 'react';
 import ActivityFeelingIcon from '../basics/ActivityFeelingIcon';
 import { Activity } from '../models/Activity';
+import { toReadableElapse } from '../models/Clock';
 import styles from './TimerActivityItem.module.scss';
-import { toReadableTime, toReadableElapse } from '../models/Clock';
+
+const DateTime = dynamic(() => import('../basics/DateTime'), { ssr: false });
 
 const TimerActivityItem: React.FC<{
   activity: Activity;
@@ -24,7 +27,7 @@ const TimerActivityItem: React.FC<{
           {activity.title}
         </h1>
         <span className={styles.time}>
-          {toReadableTime(activity.startAt)}-
+          <DateTime time={activity.startAt} />-
           ({toReadableElapse(activity.endAt - activity.startAt)})
         </span>
         <span className={styles.settings}>

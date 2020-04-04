@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
 import { TimerConsole } from '../complexes/TimerConsole';
 import { Activity, ActivityFeeling, dummyActivities } from '../models/Activity';
@@ -6,14 +5,9 @@ import { useBell } from '../models/Bell';
 import { useBeyondSprintEffect } from '../models/Clock';
 import { noneTask, settingsTask, TomatoTask } from '../models/Task';
 import ActivityEditPopup from '../simples/ActivityEditPopup';
+import TimerActivityItem from '../simples/TimerActivityItem';
 import { TimerForm } from '../simples/TimerForm';
 import styles from './TimerPage.module.scss';
-
-// this shows time and results "Text content did not match"
-const TimerActivityItem = dynamic(
-  () => import('../simples/TimerActivityItem'),
-  { ssr: false },
-);
 
 const TimerPage: React.FC = () => {
   const [refBell, bell] = useBell();
