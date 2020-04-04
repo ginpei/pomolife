@@ -4,33 +4,28 @@ export type TomatoTask = {
   label: string;
 }
 
-export const dummyTasks: TomatoTask[] = [
+export const tasks: TomatoTask[] = [
   {
     emoji: '😎',
-    id: '',
+    id: '1',
     label: 'Working',
   },
   {
     emoji: '🎮',
-    id: '',
+    id: '2',
     label: 'Having fun',
   },
   {
     emoji: '🏃🏽',
-    id: '',
+    id: '3',
     label: 'Exercising',
   },
   {
     emoji: '🍵',
-    id: '',
+    id: '4',
     label: 'Having break',
   },
 ];
-
-export const tasks: TomatoTask[] = Array.from({ length: 9 }, (v, i) => ({
-  ...(dummyTasks[Math.floor(Math.random() * dummyTasks.length)]),
-  id: String(i),
-}));
 
 export const noneTask: TomatoTask = {
   emoji: '⏸️',
