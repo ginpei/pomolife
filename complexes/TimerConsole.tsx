@@ -1,7 +1,11 @@
 import React from 'react';
-import { getSprintTimes, toReadableElapse, toSprintTime, useClock } from '../models/Clock';
-import { noneTask, settingsTask, tasks, TomatoTask } from '../models/Task';
-import './TimerConsole.scss';
+import {
+  getSprintTimes, toReadableElapse, toSprintTime, useClock,
+} from '../models/Clock';
+import {
+  noneTask, settingsTask, tasks, TomatoTask,
+} from '../models/Task';
+import styles from './TimerConsole.module.scss';
 
 export const TimerConsole: React.FC<{
   currentTask: TomatoTask;
@@ -15,16 +19,16 @@ export const TimerConsole: React.FC<{
   const remaining = dEnd.getTime() - now;
 
   return (
-    <div className="TimerConsole ui-container">
-      <h1 className="TimerConsole-heading ui-center">Current Sprint</h1>
-      <div className="TimerConsole-clock ui-center">
+    <div className={`${styles.TimerConsole} ui-container`}>
+      <h1 className={`${styles.heading} ui-center`}>Current Sprint</h1>
+      <div className={`${styles.clock} ui-center`}>
         {toSprintTime(dStart)} - {toSprintTime(dEnd)}
       </div>
-      <div className="TimerConsole-remaining ui-center" data-active={tracking}>
+      <div className={`${styles.remaining} ui-center`} data-active={tracking}>
         {toReadableElapse(remaining)}
         <RunningIndicator now={now} />
       </div>
-      <div className="TimerConsole-taskList">
+      <div className={styles.taskList}>
         <TaskButton
           active={noneTask === currentTask}
           onClick={onSelect}
@@ -61,13 +65,13 @@ const TaskButton: React.FC<{
 
   return (
     <button
-      className="TimerConsole-TaskButton"
+      className={styles.TaskButton}
       data-active={props.active}
       data-system={isSystem}
       onClick={onClick}
     >
       <span role="img" aria-label="">{task.emoji}</span>
-      <span className="TimerConsole-TaskButton-label">{task.label}</span>
+      <span className={styles.TaskButton_label}>{task.label}</span>
     </button>
   );
 };
@@ -77,7 +81,7 @@ const RunningIndicator: React.FC<{ now: number }> = ({ now }) => {
 
   return (
     <span
-      className="TimerConsole-RunningIndicator"
+      className={styles.RunningIndicator}
       data-on={on}
     >
       .

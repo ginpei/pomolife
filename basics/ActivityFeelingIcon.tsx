@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActivityFeeling } from '../models/Activity';
 
-export const ActivityFeelingIcon: React.FC<{
+const ActivityFeelingIcon: React.FC<{
   feeling: ActivityFeeling;
 }> = ({ feeling }) => {
   if (feeling === 'great') {
@@ -18,3 +18,5 @@ export const ActivityFeelingIcon: React.FC<{
 
   return null;
 };
+
+export default ActivityFeelingIcon;

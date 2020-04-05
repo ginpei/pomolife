@@ -3,10 +3,10 @@
  * Use `TimerContext.start()` to obtain this.
  */
 export type TimerContext = {
-  duration: number,
-  consumption: number,
-  running: boolean,
-  sessionStartedAt: number,
+  duration: number;
+  consumption: number;
+  running: boolean;
+  sessionStartedAt: number;
 }
 
 export function getNewTimerContext(): TimerContext {
@@ -56,8 +56,11 @@ export function pause(context: TimerContext, now = Date.now()) {
     return;
   }
 
+  // eslint-disable-next-line no-param-reassign
   context.consumption += now - context.sessionStartedAt;
+  // eslint-disable-next-line no-param-reassign
   context.running = false;
+  // eslint-disable-next-line no-param-reassign
   context.sessionStartedAt = 0;
 }
 
@@ -69,6 +72,8 @@ export function restart(context: TimerContext, now = Date.now()) {
     return;
   }
 
+  // eslint-disable-next-line no-param-reassign
   context.running = true;
+  // eslint-disable-next-line no-param-reassign
   context.sessionStartedAt = now;
 }

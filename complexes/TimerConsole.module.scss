@@ -8,23 +8,27 @@
     / auto auto;
 }
 
-h1.TimerConsole-heading {
+h1.heading {
   font-size: 1rem;
   margin: 0;
   grid-area: heading;
 }
 
-.TimerConsole-clock {
+.clock {
   grid-area: clock;
 }
 
-.TimerConsole-remaining {
+.remaining {
   font-size: 3rem;
   font-weight: bold;
   grid-area: remaining;
 
   &[data-active="false"] {
-    color: lightgray;
+    visibility: hidden;
+
+    .RunningIndicator {
+      visibility: hidden; // overwrite
+    }
   }
 
   @media screen and (max-width: 480px) {
@@ -34,7 +38,7 @@ h1.TimerConsole-heading {
   }
 }
 
-.TimerConsole-runningIndicator {
+.runningIndicator {
   animation: flashing 1s infinite step-end;
 
   @keyframes flashing {
@@ -43,13 +47,13 @@ h1.TimerConsole-heading {
   }
 }
 
-.TimerConsole-taskList {
+.taskList {
   display: flex;
   grid-area: task;
   overflow: auto;
 }
 
-.TimerConsole-RunningIndicator {
+.RunningIndicator {
   visibility: hidden;
 
   &[data-on="true"] {
@@ -57,7 +61,7 @@ h1.TimerConsole-heading {
   }
 }
 
-button.TimerConsole-TaskButton {
+button.TaskButton {
   align-items: center;
   background-color: lightgray;
   border-color: transparent;
@@ -85,6 +89,6 @@ button.TimerConsole-TaskButton {
   }
 }
 
-.TimerConsole-TaskButton-label {
+.TaskButton_label {
   font-size: 0.5rem;
 }

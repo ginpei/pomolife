@@ -1,19 +1,19 @@
-.TimerForm-portForm {
+.portForm {
   display: flex;
   height: 2rem;
   padding-bottom: 1rem;
   padding-top: 1rem;
 }
 
-.TimerForm-buttons {
+.buttons {
   width: 3rem;
 }
 
-.TimerForm-title {
+.title {
   flex-grow: 1;
 }
 
-.TimerForm-timer {
+.timer {
   display: grid;
   gap: 0 1rem;
   grid-template:
@@ -24,19 +24,19 @@
   margin-top: 0.5rem;
 }
 
-.TimerForm-remainingLabel {
+.remainingLabel {
   grid-area: label;
   text-align: right;
 }
 
-.TimerForm-remainingTime {
+.remainingTime {
   font-size: 3rem;
   grid-area: time;
   line-height: 3rem;
   text-align: center;
 }
 
-.TimerForm-remainingRatio {
+.remainingRatio {
   color: gray;
   font-size: 0.9rem;
   grid-area: ratio;
