@@ -12,8 +12,8 @@ type BellContext = {
 export function useBell(): [React.RefObject<HTMLAudioElement>, BellContext] {
   const [ref] = useState(createRef<HTMLAudioElement>());
 
-  const el = ref.current
-  let context: BellContext = el
+  const el = ref.current;
+  const context: BellContext = el
     ? createBellContext(el)
     : { ready: false };
 
@@ -27,6 +27,7 @@ function createBellContext(el: HTMLAudioElement) {
     ready: true,
 
     play() {
+      // eslint-disable-next-line no-param-reassign
       el.currentTime = 0;
       el.play();
     },

@@ -10,8 +10,8 @@ const ActivityEditPopup: React.FC<{
 
   const visible = activity !== null;
 
-  const onDismissClick = () => onSelect(activity!, null);
-  const onFeelingClick = (feeling: ActivityFeeling) => onSelect(activity!, feeling);
+  const onDismissClick = () => onSelect(activity, null);
+  const onFeelingClick = (feeling: ActivityFeeling) => onSelect(activity, feeling);
 
   return (
     <div className={styles.ActivityEditPopup} data-visible={visible}>
@@ -55,9 +55,9 @@ const FeelingButton: React.FC<{
   if (feeling === 'great') {
     text = 'Great!';
   } else if (feeling === 'good') {
-    text = 'Good'
+    text = 'Good';
   } else if (feeling === 'bad') {
-    text = 'Bad...'
+    text = 'Bad...';
   }
 
   const onButtonClick = () => onClick(feeling);

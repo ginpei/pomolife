@@ -22,7 +22,7 @@ export function getNewActivity(): Activity {
     id: '',
     startAt: 0,
     title: '',
-  }
+  };
 }
 
 export function getEmoji(feeling: ActivityFeeling) {
@@ -42,6 +42,7 @@ export function getEmoji(feeling: ActivityFeeling) {
 }
 
 export function setDone(activity: Activity, now = Date.now()) {
+  // eslint-disable-next-line no-param-reassign
   activity.endAt = now;
 }
 
@@ -120,5 +121,5 @@ export const dummyActivities: Activity[] = [
     id: '109',
     startAt: 1586052000000,
     title: 'Working',
-  }
+  },
 ];

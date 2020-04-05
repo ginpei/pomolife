@@ -78,6 +78,7 @@ const TimerPage: React.FC = () => {
     }
 
     if (activity && feeling !== null) {
+      // eslint-disable-next-line no-param-reassign
       activity.feeling = feeling;
       setActivityLog(activityLog);
     }

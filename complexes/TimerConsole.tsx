@@ -1,6 +1,10 @@
 import React from 'react';
-import { getSprintTimes, toReadableElapse, toSprintTime, useClock } from '../models/Clock';
-import { noneTask, settingsTask, tasks, TomatoTask } from '../models/Task';
+import {
+  getSprintTimes, toReadableElapse, toSprintTime, useClock,
+} from '../models/Clock';
+import {
+  noneTask, settingsTask, tasks, TomatoTask,
+} from '../models/Task';
 import styles from './TimerConsole.module.scss';
 
 export const TimerConsole: React.FC<{

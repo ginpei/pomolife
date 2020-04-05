@@ -2,8 +2,7 @@ import React from 'react';
 import styles from './TimerForm.module.scss';
 
 export const TimerForm: React.FC<{
-}> = (props) => {
-  return (
+}> = (props) => (
     <div className={styles.TimerForm}>
       <div className={styles.portForm}>
         <input
@@ -16,5 +15,4 @@ export const TimerForm: React.FC<{
         </button>
       </div>
     </div>
-  );
-};
+);
