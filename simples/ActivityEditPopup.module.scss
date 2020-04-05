@@ -16,7 +16,7 @@
   }
 }
 
-.ActivityEditPopup-inner {
+.inner {
   background-color: #090c;
   border: 2px solid #090;
   border-radius: 0.2rem;
@@ -25,7 +25,7 @@
   position: relative;
 }
 
-button.ActivityEditPopup-dismiss {
+button.dismiss {
   background-color: transparent;
   border-style: none;
   color: inherit;
@@ -41,12 +41,12 @@ button.ActivityEditPopup-dismiss {
   }
 }
 
-.ActivityEditPopup-heading {
+.heading {
   font-size: 1rem;
   margin-top: 0;
 }
 
-.ActivityEditPopup-feelingList {
+.feelingList {
   display: flex;
 
   & > *:not(:last-child) {
@@ -54,7 +54,7 @@ button.ActivityEditPopup-dismiss {
   }
 }
 
-button.ActivityEditPopup-FeelingButton {
+button.FeelingButton {
   background-color: snow;
   border: 1px solid gray;
   flex-grow: 1;

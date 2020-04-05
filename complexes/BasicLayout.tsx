@@ -15,30 +15,24 @@ export const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
   );
 };
 
-export const BasicPageHeader = () => {
-  return (
+export const BasicPageHeader = () => (
     <div className="BasicPageHeader">
       <div className="ui-container">
         <a href="/">Pomolife</a>
       </div>
     </div>
-  );
-};
+);
 
-export const BasicPageBody: React.FC = (props) => {
-  return (
+export const BasicPageBody: React.FC = (props) => (
     <div className="BasicPageBody ui-container">
       {props.children}
     </div>
-  );
-};
+);
 
-export const BasicPageFooter = () => {
-  return (
+export const BasicPageFooter = () => (
     <div className="BasicPageFooter">
       <div className="ui-container">
         Footer
       </div>
     </div>
-  );
-};
+);

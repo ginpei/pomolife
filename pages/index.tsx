@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { TimerConsole } from '../complexes/TimerConsole';
 import { Activity, ActivityFeeling, dummyActivities } from '../models/Activity';
+import { useBell } from '../models/Bell';
 import { useBeyondSprintEffect } from '../models/Clock';
 import { noneTask, settingsTask, TomatoTask } from '../models/Task';
-import { ActivityEditPopup } from '../simples/ActivityEditPopup';
-import { TimerActivityItem } from '../simples/TimerActivityItem';
+import ActivityEditPopup from '../simples/ActivityEditPopup';
+import TimerActivityItem from '../simples/TimerActivityItem';
 import { TimerForm } from '../simples/TimerForm';
-import './TimerPage.scss';
+import styles from './TimerPage.module.scss';
 
-export const TimerPage: React.FC = () => {
-  const url = '/D0002070098_00000_A_001.m4a';
-  const [bell] = useState(new Audio(url));
+const TimerPage: React.FC = () => {
+  const [refBell, bell] = useBell();
   const [currentTask, setCurrentTask] = useState(noneTask);
   const [activityLog, setActivityLog] = useState<Activity[]>(dummyActivities);
   const [editingActivity, setEditingActivityValue] = useState<Activity | null>(null);
@@ -33,9 +33,9 @@ export const TimerPage: React.FC = () => {
       return;
     }
 
-    // sound
-    bell.currentTime = 0;
-    bell.play();
+    if (bell.ready) {
+      bell.play();
+    }
 
     const lastActivity = activityLog[activityLog.length - 1];
     const startAt = Math.max(lastActivity.endAt, sessionStartAt);
@@ -73,9 +73,12 @@ export const TimerPage: React.FC = () => {
   };
 
   const onLastFeelingSelect = (activity: Activity, feeling: ActivityFeeling | null) => {
-    bell.pause();
+    if (bell.ready) {
+      bell.stop();
+    }
 
     if (activity && feeling !== null) {
+      // eslint-disable-next-line no-param-reassign
       activity.feeling = feeling;
       setActivityLog(activityLog);
     }
@@ -84,15 +87,15 @@ export const TimerPage: React.FC = () => {
   };
 
   return (
-    <div className="TimerPage">
-      <header className="TimerPage-header">
+    <div className={styles.TimerPage}>
+      <header className={styles.header}>
         <TimerConsole
           currentTask={currentTask}
           onSelect={onTaskSelect}
         />
       </header>
-      <div className="TimerPage-body">
-        <div className="TimerPage-activityList">
+      <div className={styles.body}>
+        <div className={styles.activityList}>
           {activityLog.map((activity) => (
             <TimerActivityItem
               activity={activity}
@@ -103,7 +106,7 @@ export const TimerPage: React.FC = () => {
           ))}
         </div>
       </div>
-      <footer className="TimerPage-footer">
+      <footer className={styles.footer}>
         <div className="ui-container">
           <TimerForm />
         </div>
@@ -112,6 +115,12 @@ export const TimerPage: React.FC = () => {
         activity={editingActivity}
         onSelect={onLastFeelingSelect}
       />
+      <audio
+        ref={refBell}
+        src="/D0002070098_00000_A_001.m4a"
+      />
     </div>
   );
 };
+
+export default TimerPage;

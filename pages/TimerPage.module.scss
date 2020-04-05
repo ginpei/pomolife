@@ -4,23 +4,31 @@
   height: 100vh;
 }
 
-.TimerPage-header {
+h1.title {
+  color: blue;
+
+  .symbol {
+    color: tomato;
+  }
+}
+
+.header {
   border-bottom: 1px solid lightgray;
   padding-bottom: 1rem;
   padding-top: 1rem;
   width: 100%;
 }
 
-.TimerPage-body {
+.body {
   overflow: auto;
 }
 
-.TimerPage-footer {
+.footer {
   border-top: 1px solid lightgray;
   width: 100%;
 }
 
-.TimerPage-activityList {
+.activityList {
   background-color: #f0f0f0;
   min-height: calc(100% - 30vh);
   padding-bottom: 30vh;

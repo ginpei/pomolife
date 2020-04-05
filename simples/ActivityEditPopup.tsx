@@ -1,8 +1,8 @@
 import React from 'react';
 import { Activity, ActivityFeeling, getEmoji } from '../models/Activity';
-import './ActivityEditPopup.scss';
+import styles from './ActivityEditPopup.module.scss';
 
-export const ActivityEditPopup: React.FC<{
+const ActivityEditPopup: React.FC<{
   activity: Activity | null;
   onSelect: (activity: Activity, feeling: ActivityFeeling | null) => void;
 }> = ({ activity, onSelect }) => {
@@ -10,25 +10,25 @@ export const ActivityEditPopup: React.FC<{
 
   const visible = activity !== null;
 
-  const onDismissClick = () => onSelect(activity!, null);
-  const onFeelingClick = (feeling: ActivityFeeling) => onSelect(activity!, feeling);
+  const onDismissClick = () => onSelect(activity, null);
+  const onFeelingClick = (feeling: ActivityFeeling) => onSelect(activity, feeling);
 
   return (
-    <div className="ActivityEditPopup" data-visible={visible}>
+    <div className={styles.ActivityEditPopup} data-visible={visible}>
       <div className="ui-container">
-        <div className="ActivityEditPopup-inner">
+        <div className={styles.inner}>
           <button
-            className="ActivityEditPopup-dismiss"
+            className={styles.dismiss}
             onClick={onDismissClick}
           >
             ×
           </button>
-          <h1 className="ActivityEditPopup-heading">
+          <h1 className={styles.heading}>
             <span role="img" aria-label="">🔔</span>
             {' '}
             How was the sprint?
           </h1>
-          <div className="ActivityEditPopup-feelingList">
+          <div className={styles.feelingList}>
             {feelings.map((feeling) => (
               <FeelingButton
                 feeling={feeling}
@@ -55,16 +55,16 @@ const FeelingButton: React.FC<{
   if (feeling === 'great') {
     text = 'Great!';
   } else if (feeling === 'good') {
-    text = 'Good'
+    text = 'Good';
   } else if (feeling === 'bad') {
-    text = 'Bad...'
+    text = 'Bad...';
   }
 
   const onButtonClick = () => onClick(feeling);
 
   return (
     <button
-      className="ActivityEditPopup-FeelingButton"
+      className={styles.FeelingButton}
       data-selected={selected}
       onClick={onButtonClick}
     >
@@ -74,3 +74,5 @@ const FeelingButton: React.FC<{
     </button>
   );
 };
+
+export default ActivityEditPopup;

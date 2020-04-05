@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 /**
  * @example
@@ -18,7 +18,7 @@ export function useClock() {
 export function useBeyondSprintEffect(
   callback: (lastPeriod: number, period: number) => void,
 ) {
-  const [now] =  useClock();
+  const [now] = useClock();
   const [curPeriod, setCurPeriod] = useState(0);
   const [, dEnd] = getSprintTimes(now);
 
@@ -35,7 +35,7 @@ export function useBeyondSprintEffect(
 }
 
 export function getSprintTimes(now: number): [Date, Date] {
-  const numHourlySprints = Number((window as any).g_params?.sprints) || 2;
+  const numHourlySprints = Number(globalThis.g_params?.sprints) || 2;
   const sprintPeriod = 60 / numHourlySprints; // in min
 
   const d = new Date(now);
@@ -43,7 +43,7 @@ export function getSprintTimes(now: number): [Date, Date] {
   d.setMilliseconds(0);
 
   const min = d.getMinutes();
-  d.setMinutes(min - min % sprintPeriod);
+  d.setMinutes(min - (min % sprintPeriod));
 
   const dEnd = new Date(d.getTime() + sprintPeriod * 1000 * 60);
 
@@ -78,7 +78,7 @@ export function toSprintTime(d: Date): string {
 }
 
 function to2digits(n: number) {
-  if (n < 0 || 100 <= n) {
+  if (n < 0 || n >= 100) {
     throw new Error('Number must be equal to or more than zero, and less than 100');
   }
 
@@ -88,5 +88,5 @@ function to2digits(n: number) {
     return `0${integer}`;
   }
 
-  return `${integer}`
+  return `${integer}`;
 }
