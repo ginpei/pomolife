@@ -73,7 +73,6 @@ const TimerPage: React.FC = () => {
   };
 
   const onLastFeelingSelect = (activity: Activity, feeling: ActivityFeeling | null) => {
-    console.log(`# ?`, activity, feeling);
     if (bell.ready) {
       bell.stop();
     }
