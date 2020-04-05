@@ -35,7 +35,7 @@ export function useBeyondSprintEffect(
 }
 
 export function getSprintTimes(now: number): [Date, Date] {
-  const numHourlySprints = Number((window as any).g_params?.sprints) || 2;
+  const numHourlySprints = Number(globalThis.g_params?.sprints) || 2;
   const sprintPeriod = 60 / numHourlySprints; // in min
 
   const d = new Date(now);
