@@ -11,9 +11,6 @@ module.exports = {
     "es6": true,
     "jest": true,
   },
-  "globals": {
-    "globalThis": false,
-  },
   "parser": "@typescript-eslint/parser",
   settings: {
     'import/resolver': {
