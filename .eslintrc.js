@@ -29,6 +29,10 @@ module.exports = {
     "arrow-parens": ["error", "always"],
     "class-methods-use-this": "off",
     "import/extensions": ["error", "never"],
+    "import/no-extraneous-dependencies": [
+      "error",
+      { "devDependencies": ["**/*.test.{ts,tsx}"] }
+    ],
     "import/prefer-default-export": "off",
   },
 };
