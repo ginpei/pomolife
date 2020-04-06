@@ -18,7 +18,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 10.x
-    - run: npm cit
+    - run: npm cit && npm run lint
       env:
         CI: true
     - run: npm run build
