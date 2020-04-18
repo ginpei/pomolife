@@ -6,7 +6,8 @@
     "build": "next build && next export",
     "dev": "next dev",
     "lint": "eslint --ext ts,tsx . && echo OK",
-    "start": "next start",
+    "start": "next dev",
+    "start-next": "next start",
     "test": "jest",
     "tw": "jest --watch"
   },
