@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import React, { useState } from 'react';
 import { TimerConsole } from '../complexes/TimerConsole';
 import { Activity, ActivityFeeling, dummyActivities } from '../models/Activity';
@@ -88,6 +89,13 @@ const TimerPage: React.FC = () => {
 
   return (
     <div className={styles.TimerPage}>
+      <Head>
+        <title>Pomolife</title>
+        <link rel="shortcut icon" type="image/png" href="/images/icons/icon-512.png" />
+        <link rel="apple-touch-icon" type="image/png" href="/images/icons/icon-512.png" />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#003366"/>
+      </Head>
       <header className={styles.header}>
         <TimerConsole
           currentTask={currentTask}
