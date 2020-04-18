@@ -95,6 +95,7 @@ const TimerPage: React.FC = () => {
         <link rel="apple-touch-icon" type="image/png" href="/images/icons/icon-512x512.png" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#003366"/>
+        <meta name="version" content={`v${process.env.version}`} />
       </Head>
       <header className={styles.header}>
         <TimerConsole
