@@ -1,10 +1,10 @@
-import Head from 'next/head';
 import React, { useState } from 'react';
 import { TimerConsole } from '../complexes/TimerConsole';
 import { Activity, ActivityFeeling, dummyActivities } from '../models/Activity';
 import { useBell } from '../models/Bell';
 import { useBeyondSprintEffect } from '../models/Clock';
 import { noneTask, settingsTask, TomatoTask } from '../models/Task';
+import BasicHead from '../pure/BasicHead';
 import ActivityEditPopup from '../simples/ActivityEditPopup';
 import TimerActivityItem from '../simples/TimerActivityItem';
 import { TimerForm } from '../simples/TimerForm';
@@ -89,14 +89,7 @@ const TimerPage: React.FC = () => {
 
   return (
     <div className={styles.TimerPage}>
-      <Head>
-        <title>Pomolife</title>
-        <link rel="shortcut icon" type="image/png" href="/images/icons/icon-512x512.png" />
-        <link rel="apple-touch-icon" type="image/png" href="/images/icons/icon-512x512.png" />
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#003366"/>
-        <meta name="version" content={`v${process.env.version}`} />
-      </Head>
+      <BasicHead />
       <header className={styles.header}>
         <TimerConsole
           currentTask={currentTask}
