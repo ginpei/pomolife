@@ -3,6 +3,7 @@ import { TimerConsole } from '../complexes/TimerConsole';
 import { Activity, ActivityFeeling, dummyActivities } from '../models/Activity';
 import { useBell } from '../models/Bell';
 import { useBeyondSprintEffect } from '../models/Clock';
+import { notifyNewSprint } from '../models/Notification';
 import { noneTask, settingsTask, TomatoTask } from '../models/Task';
 import BasicHead from '../pure/BasicHead';
 import ActivityEditPopup from '../simples/ActivityEditPopup';
@@ -54,6 +55,8 @@ const TimerPage: React.FC = () => {
 
     // open activity edit popup
     setEditingActivity(latestActivity);
+
+    notifyNewSprint({ task: currentTask });
   });
 
   const onTaskSelect = (task: TomatoTask) => {
@@ -63,6 +66,7 @@ const TimerPage: React.FC = () => {
 
     setCurrentTask(task);
     setSessionStartAt(Date.now());
+    notifyNewSprint({ task });
   };
 
   const onActivityClick = (activity: Activity) => {

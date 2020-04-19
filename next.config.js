@@ -8,5 +8,6 @@ module.exports = withPWA({
   },
   pwa: {
     dest: 'public',
+    importScripts: ['/ws/notifications.js'],
   },
 });
