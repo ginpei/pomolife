@@ -9,7 +9,7 @@ import BasicHead from '../pure/BasicHead';
 import ActivityEditPopup from '../simples/ActivityEditPopup';
 import TimerActivityItem from '../simples/TimerActivityItem';
 import { TimerForm } from '../simples/TimerForm';
-import styles from './TimerPage.module.scss';
+import styles from './index.module.scss';
 
 const TimerPage: React.FC = () => {
   const [refBell, bell] = useBell();
