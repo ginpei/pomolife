@@ -1,15 +1,7 @@
-.TimerPage {
+.root {
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 1fr auto auto;
   height: 100vh;
-}
-
-h1.title {
-  color: blue;
-
-  .symbol {
-    color: tomato;
-  }
 }
 
 .header {
@@ -24,6 +16,11 @@ h1.title {
 }
 
 .footer {
+  border-top: 1px solid lightgray;
+  width: 100%;
+}
+
+.tabs {
   border-top: 1px solid lightgray;
   width: 100%;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { TimerConsole } from '../complexes/TimerConsole';
 import { Activity, ActivityFeeling, dummyActivities } from '../models/Activity';
 import { useBell } from '../models/Bell';
@@ -10,6 +10,7 @@ import ActivityEditPopup from '../simples/ActivityEditPopup';
 import TimerActivityItem from '../simples/TimerActivityItem';
 import { TimerForm } from '../simples/TimerForm';
 import styles from './index.module.scss';
+import MainTabs from '../pure/MainTabs';
 
 const TimerPage: React.FC = () => {
   const [refBell, bell] = useBell();
@@ -92,7 +93,7 @@ const TimerPage: React.FC = () => {
   };
 
   return (
-    <div className={styles.TimerPage}>
+    <div className={styles.root}>
       <BasicHead />
       <header className={styles.header}>
         <TimerConsole
@@ -117,6 +118,7 @@ const TimerPage: React.FC = () => {
           <TimerForm />
         </div>
       </footer>
+      <MainTabs />
       <ActivityEditPopup
         activity={editingActivity}
         onSelect={onLastFeelingSelect}
