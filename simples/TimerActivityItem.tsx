@@ -15,7 +15,7 @@ const TimerActivityItem: React.FC<{
   const onItemClick = () => onClick(activity);
   return (
     <article
-      className={styles.TimerActivityItem}
+      className={styles.root}
       data-selected={selected}
       onClick={onItemClick}
     >
