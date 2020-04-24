@@ -46,7 +46,7 @@ export type SetSprintCycleAction = {
   };
 }
 
-export const settingsReducer: Reducer<Settings, SettingsAction> = (state, action) => {
+export const settingsReducer: Reducer<Settings | null, SettingsAction> = (state, action) => {
   const { data, type } = action;
 
   if (type === 'settings/whole/set') {

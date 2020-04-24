@@ -10,8 +10,20 @@ const ActivityEditPopup: React.FC<{
 
   const visible = activity !== null;
 
-  const onDismissClick = () => onSelect(activity, null);
-  const onFeelingClick = (feeling: ActivityFeeling) => onSelect(activity, feeling);
+  const onDismissClick = () => {
+    if (!activity) {
+      throw new Error('Activity must be set');
+    }
+
+    onSelect(activity, null);
+  };
+  const onFeelingClick = (feeling: ActivityFeeling) => {
+    if (!activity) {
+      throw new Error('Activity must be set');
+    }
+
+    onSelect(activity, feeling);
+  };
 
   return (
     <div className={styles.ActivityEditPopup} data-visible={visible}>
