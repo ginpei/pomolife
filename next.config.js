@@ -2,7 +2,7 @@
 
 const withPWA = require('next-pwa');
 
-module.exports = withPWA({
+const config = {
   env: {
     version: process.env.npm_package_version,
   },
@@ -10,4 +10,9 @@ module.exports = withPWA({
     dest: 'public',
     importScripts: ['/ws/notifications.js'],
   },
-});
+};
+
+// apply PWA only production to avoid hot-reload error
+module.exports = process.env.NODE_ENV === 'production'
+  ? withPWA(config)
+  : config;
