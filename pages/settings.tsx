@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import {
-  isSprintCycle, Settings, SprintCycle, sprintCycles,
-} from '../models/Settings';
-import { loadSettings, saveSettings } from '../models/SettingsService';
+import React, {
+  useCallback, useEffect, useReducer, useState,
+} from 'react';
+import { isSprintCycle, SprintCycle, sprintCycles } from '../models/Settings';
+import { loadSettings, saveSettings, settingsReducer } from '../models/SettingsService';
 import BasicHead from '../pure/BasicHead';
 import MainTabs from '../pure/MainTabs';
 import styles from './settings.module.scss';
 
 const SettingsPage: React.FC = () => {
-  const [settings, setSettings] = useState<Settings | null>(null);
+  const [settings, reduceSettings] = useReducer(settingsReducer, null);
   const [selectedCycle, setSelectedCycle] = useState<SprintCycle>(2);
 
   const onCycleChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -19,15 +19,20 @@ const SettingsPage: React.FC = () => {
     }
     setSelectedCycle(cycle);
 
-    setSettings({
-      ...settings,
-      sprintCycle: cycle,
+    reduceSettings({
+      data: { sprintCycle: cycle },
+      type: 'settings/sprintCycle/set',
     });
   }, []);
 
   useEffect(() => {
     loadSettings().then((loadedSettings) => {
-      setSettings(loadedSettings);
+      reduceSettings({
+        data: loadedSettings,
+        type: 'settings/whole/set',
+      });
+
+      // initial values
       setSelectedCycle(loadedSettings.sprintCycle);
     });
   }, []);

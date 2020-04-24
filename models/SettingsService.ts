@@ -1,13 +1,16 @@
-import { Settings, isSprintCycle } from './Settings';
+import { Reducer } from 'react';
+import { Settings, isSprintCycle, SprintCycle } from './Settings';
 
 const storageKey = 'pomolife-settings';
+
+export const defaultSettings: Settings = {
+  sprintCycle: 2,
+};
 
 export async function loadSettings(): Promise<Settings> {
   const json = localStorage.getItem(storageKey);
   if (!json) {
-    return {
-      sprintCycle: 2,
-    };
+    return defaultSettings;
   }
 
   const data = JSON.parse(json);
@@ -26,3 +29,33 @@ export async function saveSettings(settings: Settings): Promise<void> {
   const json = JSON.stringify(settings);
   localStorage.setItem(storageKey, json);
 }
+
+export type SettingsAction =
+  | SetWholeSettingsAction
+  | SetSprintCycleAction
+
+export type SetWholeSettingsAction = {
+  type: 'settings/whole/set';
+  data: Settings;
+}
+
+export type SetSprintCycleAction = {
+  type: 'settings/sprintCycle/set';
+  data: {
+    sprintCycle: SprintCycle;
+  };
+}
+
+export const settingsReducer: Reducer<Settings, SettingsAction> = (state, action) => {
+  const { data, type } = action;
+
+  if (type === 'settings/whole/set') {
+    return { ...data };
+  }
+
+  if (type === 'settings/sprintCycle/set') {
+    return { ...state, sprintCycle: data.sprintCycle };
+  }
+
+  return state;
+};
