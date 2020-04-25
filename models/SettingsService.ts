@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useReducer, createContext } from 'react';
 import { isSprintCycle, Settings, SprintCycle } from './Settings';
 
 const storageKey = 'pomolife-settings';
@@ -61,3 +61,7 @@ export function useSettingsReducer(initialState: Settings | null = null) {
     return state;
   }, initialState);
 }
+
+export const SettingsContext = createContext<
+  ReturnType<typeof useSettingsReducer>
+>([null, () => { /* empty */ }]);

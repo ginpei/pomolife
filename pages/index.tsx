@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { TimerConsole } from '../complexes/TimerConsole';
 import { Activity, ActivityFeeling, dummyActivities } from '../models/Activity';
 import { useBell } from '../models/Bell';
 import { useBeyondSprintEffect } from '../models/Clock';
 import { notifyNewSprint } from '../models/Notification';
+import { SettingsContext, useSettingsReducer, loadSettings } from '../models/SettingsService';
 import { noneTask, settingsTask, TomatoTask } from '../models/Task';
 import BasicHead from '../pure/BasicHead';
 import MainTabs from '../pure/MainTabs';
@@ -11,6 +12,7 @@ import ActivityEditPopup from '../simples/ActivityEditPopup';
 import TimerActivityItem from '../simples/TimerActivityItem';
 import { TimerForm } from '../simples/TimerForm';
 import styles from './index.module.scss';
+import { SettingsProvider } from '../models/SettingsProvider';
 
 const TimerPage: React.FC = () => {
   const [refBell, bell] = useBell();
@@ -18,6 +20,8 @@ const TimerPage: React.FC = () => {
   const [activityLog, setActivityLog] = useState<Activity[]>(dummyActivities);
   const [editingActivity, setEditingActivityValue] = useState<Activity | null>(null);
   const [sessionStartAt, setSessionStartAt] = useState(0);
+  const [settings, reduceSettings] = useContext(SettingsContext);
+  useEffect(() => console.log('# settings', settings), [settings]);
 
   const setEditingActivity: typeof setEditingActivityValue = (activity) => {
     if (editingActivity && activity) {
@@ -131,4 +135,10 @@ const TimerPage: React.FC = () => {
   );
 };
 
-export default TimerPage;
+const TimerPageProvided: React.FC = () => (
+  <SettingsProvider>
+    <TimerPage />
+  </SettingsProvider>
+);
+
+export default TimerPageProvided;
