@@ -1,5 +1,5 @@
-import { Reducer } from 'react';
-import { Settings, isSprintCycle, SprintCycle } from './Settings';
+import { useReducer } from 'react';
+import { isSprintCycle, Settings, SprintCycle } from './Settings';
 
 const storageKey = 'pomolife-settings';
 
@@ -46,16 +46,18 @@ export type SetSprintCycleAction = {
   };
 }
 
-export const settingsReducer: Reducer<Settings | null, SettingsAction> = (state, action) => {
-  const { data, type } = action;
+export function useSettingsReducer(initialState: Settings | null = null) {
+  return useReducer((state: Settings | null, action: SettingsAction) => {
+    const { data, type } = action;
 
-  if (type === 'settings/whole/set') {
-    return { ...data };
-  }
+    if (type === 'settings/whole/set') {
+      return { ...data };
+    }
 
-  if (type === 'settings/sprintCycle/set') {
-    return { ...state, sprintCycle: data.sprintCycle };
-  }
+    if (type === 'settings/sprintCycle/set') {
+      return { ...state, sprintCycle: data.sprintCycle };
+    }
 
-  return state;
-};
+    return state;
+  }, initialState);
+}

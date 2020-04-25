@@ -1,14 +1,12 @@
-import React, {
-  useCallback, useEffect, useReducer, useState,
-} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { isSprintCycle, SprintCycle, sprintCycles } from '../models/Settings';
-import { loadSettings, saveSettings, settingsReducer } from '../models/SettingsService';
+import { loadSettings, saveSettings, useSettingsReducer } from '../models/SettingsService';
 import BasicHead from '../pure/BasicHead';
 import MainTabs from '../pure/MainTabs';
 import styles from './settings.module.scss';
 
 const SettingsPage: React.FC = () => {
-  const [settings, reduceSettings] = useReducer(settingsReducer, null);
+  const [settings, reduceSettings] = useSettingsReducer();
   const [selectedCycle, setSelectedCycle] = useState<SprintCycle>(2);
 
   const onCycleChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
