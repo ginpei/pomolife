@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   getSprintTimes, toReadableElapse, toSprintTime, useClock,
 } from '../models/Clock';
@@ -11,12 +11,10 @@ export const TimerConsole: React.FC<{
   currentTask: TomatoTask;
   onSelect: (task: TomatoTask) => void;
 }> = ({ currentTask, onSelect }) => {
-  const tracking = currentTask !== noneTask;
-
   const [now] = useClock();
-
-  const [dStart, dEnd] = getSprintTimes(now);
-  const remaining = dEnd.getTime() - now;
+  const tracking = useMemo(() => currentTask !== noneTask, [currentTask]);
+  const [dStart, dEnd] = useMemo(() => getSprintTimes(now), [now]);
+  const remaining = useMemo(() => dEnd.getTime() - now, [dEnd, now]);
 
   return (
     <div className={`${styles.TimerConsole} ui-container`}>

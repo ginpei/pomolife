@@ -1,4 +1,6 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, {
+  useState, useContext, useEffect, useCallback,
+} from 'react';
 import { TimerConsole } from '../complexes/TimerConsole';
 import { Activity, ActivityFeeling, dummyActivities } from '../models/Activity';
 import { useBell } from '../models/Bell';
@@ -23,7 +25,7 @@ const TimerPage: React.FC = () => {
   const [settings, reduceSettings] = useContext(SettingsContext);
   useEffect(() => console.log('# settings', settings), [settings]);
 
-  const setEditingActivity: typeof setEditingActivityValue = (activity) => {
+  const setEditingActivity: typeof setEditingActivityValue = useCallback((activity) => {
     if (editingActivity && activity) {
       setEditingActivityValue(null);
 
@@ -32,7 +34,7 @@ const TimerPage: React.FC = () => {
     } else {
       setEditingActivityValue(activity);
     }
-  };
+  }, [editingActivity]);
 
   useBeyondSprintEffect((lastPeriod) => {
     // do nothing if not tracking
@@ -64,7 +66,7 @@ const TimerPage: React.FC = () => {
     notifyNewSprint({ task: currentTask });
   });
 
-  const onTaskSelect = (task: TomatoTask) => {
+  const onTaskSelect = useCallback((task: TomatoTask) => {
     if (task === settingsTask) {
       return;
     }
@@ -72,17 +74,17 @@ const TimerPage: React.FC = () => {
     setCurrentTask(task);
     setSessionStartAt(Date.now());
     notifyNewSprint({ task });
-  };
+  }, []);
 
-  const onActivityClick = (activity: Activity) => {
+  const onActivityClick = useCallback((activity: Activity) => {
     if (editingActivity === activity) {
       setEditingActivity(null);
     } else {
       setEditingActivity(activity);
     }
-  };
+  }, [editingActivity]);
 
-  const onLastFeelingSelect = (activity: Activity, feeling: ActivityFeeling | null) => {
+  const onLastFeelingSelect = useCallback((activity: Activity, feeling: ActivityFeeling | null) => {
     if (bell.ready) {
       bell.stop();
     }
@@ -94,7 +96,7 @@ const TimerPage: React.FC = () => {
     }
 
     setEditingActivity(null);
-  };
+  }, [bell]);
 
   return (
     <div className={styles.root}>
