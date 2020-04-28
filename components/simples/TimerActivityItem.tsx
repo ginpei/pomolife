@@ -1,8 +1,8 @@
 import dynamic from 'next/dynamic';
 import React from 'react';
+import { Activity } from '../../models/Activity';
+import { toReadableElapse } from '../../models/Clock';
 import ActivityFeelingIcon from '../basics/ActivityFeelingIcon';
-import { Activity } from '../models/Activity';
-import { toReadableElapse } from '../models/Clock';
 import styles from './TimerActivityItem.module.scss';
 
 const DateTime = dynamic(() => import('../basics/DateTime'), { ssr: false });

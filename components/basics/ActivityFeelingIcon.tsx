@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityFeeling } from '../models/Activity';
+import { ActivityFeeling } from '../../models/Activity';
 
 const ActivityFeelingIcon: React.FC<{
   feeling: ActivityFeeling;

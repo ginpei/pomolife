@@ -1,5 +1,5 @@
 import React from 'react';
-import MainTabs from '../pure/MainTabs';
+import MainTabs from '../components/pure/MainTabs';
 import styles from './logs.module.scss';
 
 // eslint-disable-next-line arrow-body-style

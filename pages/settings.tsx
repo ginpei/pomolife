@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import BasicHead from '../components/pure/BasicHead';
+import MainTabs from '../components/pure/MainTabs';
 import { isSprintCycle, SprintCycle, sprintCycles } from '../models/Settings';
 import { loadSettings, saveSettings, useSettingsReducer } from '../models/SettingsService';
-import BasicHead from '../pure/BasicHead';
-import MainTabs from '../pure/MainTabs';
 import styles from './settings.module.scss';
 
 const SettingsPage: React.FC = () => {

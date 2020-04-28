@@ -1,20 +1,20 @@
 import React, {
-  useState, useContext, useEffect, useCallback,
+  useCallback, useContext, useEffect, useState,
 } from 'react';
-import { TimerConsole } from '../complexes/TimerConsole';
+import { TimerConsole } from '../components/complexes/TimerConsole';
+import BasicHead from '../components/pure/BasicHead';
+import MainTabs from '../components/pure/MainTabs';
+import ActivityEditPopup from '../components/simples/ActivityEditPopup';
+import TimerActivityItem from '../components/simples/TimerActivityItem';
+import { TimerForm } from '../components/simples/TimerForm';
 import { Activity, ActivityFeeling, dummyActivities } from '../models/Activity';
 import { useBell } from '../models/Bell';
 import { useBeyondSprintEffect } from '../models/Clock';
 import { notifyNewSprint } from '../models/Notification';
-import { SettingsContext, useSettingsReducer, loadSettings } from '../models/SettingsService';
-import { noneTask, settingsTask, TomatoTask } from '../models/Task';
-import BasicHead from '../pure/BasicHead';
-import MainTabs from '../pure/MainTabs';
-import ActivityEditPopup from '../simples/ActivityEditPopup';
-import TimerActivityItem from '../simples/TimerActivityItem';
-import { TimerForm } from '../simples/TimerForm';
-import styles from './index.module.scss';
 import { SettingsProvider } from '../models/SettingsProvider';
+import { SettingsContext } from '../models/SettingsService';
+import { noneTask, settingsTask, TomatoTask } from '../models/Task';
+import styles from './index.module.scss';
 
 const TimerPage: React.FC = () => {
   const [refBell, bell] = useBell();

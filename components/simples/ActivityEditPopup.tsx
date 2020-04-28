@@ -1,5 +1,5 @@
 import React from 'react';
-import { Activity, ActivityFeeling, getEmoji } from '../models/Activity';
+import { Activity, ActivityFeeling, getEmoji } from '../../models/Activity';
 import styles from './ActivityEditPopup.module.scss';
 
 const ActivityEditPopup: React.FC<{

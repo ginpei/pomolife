@@ -1,5 +1,5 @@
 import React from 'react';
-import { toReadableTime } from '../models/Clock';
+import { toReadableTime } from '../../models/Clock';
 
 /**
  * This renders the given time in user's timezone.
