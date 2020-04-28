@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { SprintCycle } from './Settings';
 
 /**
  * @example
@@ -16,11 +17,17 @@ export function useClock() {
 }
 
 export function useBeyondSprintEffect(
+  sprintCycle: SprintCycle | 0,
   callback: (lastPeriod: number, period: number) => void,
 ) {
   const [now] = useClock();
   const [curPeriod, setCurPeriod] = useState(0);
-  const [, dEnd] = getSprintTimes(now);
+
+  if (sprintCycle === 0) {
+    return;
+  }
+
+  const [, dEnd] = getSprintTimes(sprintCycle, now);
 
   const tEnd = dEnd.getTime();
   if (now !== 0 && tEnd !== curPeriod) {
@@ -34,8 +41,10 @@ export function useBeyondSprintEffect(
   }
 }
 
-export function getSprintTimes(now: number): [Date, Date] {
-  const numHourlySprints = 2;
+export function getSprintTimes(
+  numHourlySprints: SprintCycle,
+  now: number,
+): [Date, Date] {
   const sprintPeriod = 60 / numHourlySprints; // in min
 
   const d = new Date(now);

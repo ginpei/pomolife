@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import {
   getSprintTimes, toReadableElapse, toSprintTime, useClock,
 } from '../../models/Clock';
+import { SprintCycle } from '../../models/Settings';
 import {
   noneTask, settingsTask, tasks, TomatoTask,
 } from '../../models/Task';
@@ -10,10 +11,14 @@ import styles from './TimerConsole.module.scss';
 export const TimerConsole: React.FC<{
   currentTask: TomatoTask;
   onSelect: (task: TomatoTask) => void;
-}> = ({ currentTask, onSelect }) => {
+  sprintCycle: SprintCycle;
+}> = ({ currentTask, onSelect, sprintCycle }) => {
   const [now] = useClock();
   const tracking = useMemo(() => currentTask !== noneTask, [currentTask]);
-  const [dStart, dEnd] = useMemo(() => getSprintTimes(now), [now]);
+  const [dStart, dEnd] = useMemo(
+    () => getSprintTimes(sprintCycle, now),
+    [sprintCycle, now],
+  );
   const remaining = useMemo(() => dEnd.getTime() - now, [dEnd, now]);
 
   return (

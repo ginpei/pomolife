@@ -22,8 +22,7 @@ const TimerPage: React.FC = () => {
   const [activityLog, setActivityLog] = useState<Activity[]>(dummyActivities);
   const [editingActivity, setEditingActivityValue] = useState<Activity | null>(null);
   const [sessionStartAt, setSessionStartAt] = useState(0);
-  const [settings, reduceSettings] = useContext(SettingsContext);
-  useEffect(() => console.log('# settings', settings), [settings]);
+  const [settings] = useContext(SettingsContext);
 
   const setEditingActivity: typeof setEditingActivityValue = useCallback((activity) => {
     if (editingActivity && activity) {
@@ -36,7 +35,7 @@ const TimerPage: React.FC = () => {
     }
   }, [editingActivity]);
 
-  useBeyondSprintEffect((lastPeriod) => {
+  useBeyondSprintEffect(settings?.sprintCycle ?? 0, (lastPeriod) => {
     // do nothing if not tracking
     if (currentTask === noneTask) {
       return;
@@ -102,10 +101,13 @@ const TimerPage: React.FC = () => {
     <div className={styles.root}>
       <BasicHead />
       <header className={styles.header}>
-        <TimerConsole
-          currentTask={currentTask}
-          onSelect={onTaskSelect}
-        />
+        {settings ? (
+          <TimerConsole
+            currentTask={currentTask}
+            onSelect={onTaskSelect}
+            sprintCycle={settings.sprintCycle}
+          />
+        ) : null}
       </header>
       <div className={styles.body}>
         <div className={styles.activityList}>
