@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[11],{QQVn:function(n,t,e){"use strict";e.r(t);var a=e("q1tI"),r=e.n(a),c=e("7iiI"),i=r.a.createElement;t.default=function(n){n.format;var t=n.time,e=Object(c.c)(t);return i(r.a.Fragment,null,e)}}}]);
