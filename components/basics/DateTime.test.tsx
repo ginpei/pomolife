@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer, { ReactTestRenderer } from 'react-test-renderer';
-import { toReadableTime } from '../models/Clock';
+import { toReadableTime } from '../../models/Clock';
 import DateTime from './DateTime';
 
 describe('<DateTime>', () => {
