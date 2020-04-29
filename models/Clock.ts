@@ -13,7 +13,9 @@ export function useClock() {
     return () => window.clearTimeout(tm);
   }, []);
 
-  return [now];
+  // use Date.now() here to avoid invoking it every time
+  // to give it to useState() above
+  return [now || Date.now()];
 }
 
 export function useBeyondSprintEffect(
